@@ -1,0 +1,92 @@
+body{
+    min-height: 795px;
+    font-size: 16px;
+    display: -webkit-box;
+    -webkit-box-orient:vertical;
+    font-family: "Microsoft YaHei", Helvetica, Arial, sans-serif;
+}
+header{
+    height: 60px;
+    background: #00b7ee  url(/images/qaup_logo.png) no-repeat 20px center ;
+    position: relative;
+}
+header ul{
+    position: absolute;
+    right: 5px;
+    line-height: 60px;
+}
+header ul li{
+    display: inline;
+    padding: 20px 10px 20px 35px;
+    border-left:2px solid #fff;
+}
+header ul li:first-child{
+    border: none;
+    padding-left: 50px;
+    background: url(/images/1.png) no-repeat left center;
+}
+header ul li:nth-of-type(2){
+    background: url(/images/2.png) no-repeat left center;
+}
+header ul li:last-child{
+    background: url(/images/3.png) no-repeat 5px center;
+}
+header ul a {
+    text-decoration: none;
+    color: #fff;
+}
+div#main{
+    display: -webkit-box;
+    -webkit-box-flex:1;
+    -webkit-box-orient:horizontal;
+    background-color:#f0f3f6;
+}
+div#main aside{
+    background-color: #345;
+    color:#fff;
+}
+div#main aside ul > li a{
+    display: block;
+    line-height: 3rem;
+    padding: 0 30px;
+    border-bottom: 2px solid #456;
+    color: #fff;
+}
+div#main aside ul > li ul{
+    -webkit-transition-property:display;
+    -webkit-transition:20s linear;
+    display: none;
+}
+div#main aside ul > li ul li {
+    background-color: #234;
+}
+div#main aside ul > li ul li:hover{
+    background-color: #456;
+
+}
+div#main aside ul > li ul li:hover a{
+    padding-left: 52px;
+}
+div#main aside ul > li ul a  {
+    padding-left: 50px;
+    font-size: 1rem;
+}
+div#main aside a {
+    text-decoration: none;
+}
+
+div#main article{
+    background-color: #fff;
+    -webkit-box-flex:1;
+}
+div#main article h1{
+    padding-left: 50px;
+    line-height: 50px;
+    background:#f0f3f6 url("/images/person.png") no-repeat 10px center;
+}
+footer{
+    background-color: #526178;
+    text-align: center;
+    line-height: 2rem;
+    color: #fff;
+}

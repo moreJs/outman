@@ -1,0 +1,19 @@
+<section>
+    <h1>{{title}}</h1>
+</section>
+
+<section>
+    <form class="new">
+         <div>
+             <label for="id">id:   </label>
+             <input type="text" name = "id" id = "id" ng-model = "action.id" />
+         </div>
+        <div>
+            <label for="title">title:</label>
+            <input type="text" name = "title" id = "title" ng-model = "action.title"/>
+        </div>
+        <div>
+            <a  ng-click = "save()">提交</a>
+        </div>
+    </form>
+</section>

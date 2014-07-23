@@ -1,0 +1,112 @@
+div#main article{
+    display: -webkit-box;
+    -webkit-box-orient:vertical;
+}
+div#main article section:not(:first-child){
+     margin: 10px 0px 10px 10px;
+     line-height: 50px;
+     font-size: 1.2rem;
+     padding-left: 10px;
+     background-color: #f0f3f6;
+ }
+div#main article section:nth-of-type(2){
+    font-size: 0.9rem;
+}
+div#main article section:nth-of-type(2) select,div#main article section:nth-of-type(2) input{
+    height: 20px;
+}
+div#main article section:nth-of-type(2) a{
+    text-decoration: none;
+    color: #fff;
+    font-size: 0.8rem;
+    padding: 3px 30px;
+    padding-right: 15px;
+    background: #00b7ee url(/images/2.png) no-repeat left center;
+}
+div#main article section:nth-of-type(3){
+    background-color: #fff;
+}
+div#main article section:nth-of-type(3) ul li{
+    float: left;
+}
+
+div#main article section:nth-of-type(3) select{
+    float: right;
+    font-size: 0.8rem;
+    padding: 10px;
+    margin-right: 20px;
+}
+div#main article section:nth-of-type(3) select option{
+    font-size: 0.8rem;
+    padding: 10px;
+}
+div#main article section:nth-of-type(3) ul li a{
+    background-color: #00b7ee;
+    border: 1px solid #00a2e8;
+    color:#fff;
+    font-size: 0.8rem;
+    padding: 10px;
+    margin-right: 10px;
+}
+
+div#main article section:nth-of-type(4) {
+
+}
+
+div#main article section:nth-of-type(4) table{
+    display: table;
+    border-collapse: collapse;
+    border-spacing: 2px;
+    border-color: gray;
+    width: 100%;
+    font-size: 1rem;
+}
+
+div#main article section:nth-of-type(4) table th{
+    padding: 4px 8px;
+    background: #f0f3f6;
+    border-bottom: 1px #e0e3e6 solid;
+    color: #333;
+    line-height: 24px;
+    text-align: left;
+    font-weight: 400;
+}
+div#main article section:nth-of-type(4) table td{
+    padding: 4px 8px;
+    border-top: 1px #e0e3e6 solid;
+    color: #999;
+    text-align: left;
+    line-height: 28px;
+}
+div#main article section:nth-of-type(4) table a {
+    text-decoration: none;
+    color: #89a;
+    padding-right: 10px;
+}
+div#main article section:nth-of-type(4) table tr:last-child td{
+    border-bottom: 1px #e0e3e6 solid;
+}
+div#main article section:nth-of-type(4) table tr:hover{
+    background-color:#fff ;
+}
+div#main article section:nth-of-type(5){
+    background-color: #fff;
+    padding-right: 10px;
+}
+div#main article section:nth-of-type(5) ul{
+    float: right;
+}
+div#main article section:nth-of-type(5) ul li{
+    float: left;
+}
+div#main article section:nth-of-type(5) ul li a{
+    font-size: 0.8rem;
+    display: block;
+    text-decoration: none;
+    padding: 0px 25px;
+    border: 1px solid #e2e8ed;
+}
+div#main article section:nth-of-type(5) span{
+    font-size: 1rem;
+    color: #999;
+}

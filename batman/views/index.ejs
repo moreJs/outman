@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html ng-app="batman">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel = "stylesheet"   href="/stylesheets/reset.css"    type = "text/css"/>
+    <link rel = "stylesheet"  href="/stylesheets/main.css"   type="text/css"/>
+    <script src = "/javascripts/ng/angular.min.js"></script>
+    <script src = "/javascripts/ng/angular-route.min.js"></script>
+    <script src = "/javascripts/ng/angular-resource.min.js"></script>
+    <script src = "/javascripts/services.js"></script>
+    <script src = "/javascripts/controllers.js"></script>
+    <script src = "/javascripts/main.js"></script>
+</head>
+<body>
+<header>
+    <ul>
+        <li><a href="">欢迎你,<%= name %></a></li>
+        <li><a href="">个人中心</a></li>
+        <li><a href="">注销</a></li>
+    </ul>
+</header>
+<div id="main">
+    <aside>
+        <ul id = "nav">
+            <li>
+                <a>数据字典管理</a>
+                <ul>
+                    <li><a ng-href="#/problem">问题类字典管理</a></li>
+                    <li><a ng-href="#/action">元方案字典管理</a></li>
+                </ul>
+            </li>
+            <li>
+                <a>事实库管理</a>
+                <ul>
+                    <li><a href="">问题处理事实库</a></li>
+                </ul>
+            </li>
+            <li>
+                <a>知识库管理</a>
+                <ul>
+                    <li><a href="">问题处理知识库</a></li>
+                </ul>
+            </li>
+            <li>
+                <a>面向问题分析机制</a>
+                <ul>
+                    <li><a href="">原因分析</a></li>
+                    <li><a href="">结果预测</a></li>
+                    <li><a href="#">方案推荐</a></li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
+    <article ng-view>
+    </article>
+</div>
+<footer>
+    <p>&copy;2014 大连理工大学系统工程研究所</p>
+</footer>
+</body>
+</html>

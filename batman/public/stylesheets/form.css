@@ -1,0 +1,16 @@
+div#main article section:nth-of-type(2) form.new{
+    font-size: 1rem;
+    margin: 10px auto;
+    width: 250px;
+}
+div#main article section:nth-of-type(2) form.new div{
+    position: relative;
+}
+div#main article section:nth-of-type(2) form.new input{
+    position: absolute;
+    right: 0;
+    top: 10px;
+}
+div#main article section:nth-of-type(2) form.new div a {
+    margin-left: 170px;
+}
