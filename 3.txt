@@ -2,6 +2,3 @@ this is my first git
 
 
 this is second change
-you are a nice boy
-
-you are not a good boy
