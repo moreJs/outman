@@ -1,4 +1,4 @@
-var app = angular.module('batman',['batman.service','ngRoute']);
+var app = angular.module('batman',['batman.service','batman.direcive','ngRoute']);
 app.config(['$routeProvider',function($routeProvider){
     $routeProvider.
         when('/action',{
@@ -40,6 +40,25 @@ app.config(['$routeProvider',function($routeProvider){
                 }
             },
             templateUrl:'/html/problem/update.html'
+        }).when('/fact',{
+            controller:'list_F',
+            resolve:{
+                facts:function(MultiFactLoader){
+                    return MultiFactLoader();
+                }
+            },
+            templateUrl:'/html/fact/list.html'
+        }).when('/fact/new',{
+            controller:'new_F',
+            templateUrl:'/html/fact/new.html'
+        }).when('/fact/update/:_id',{
+            controller:'update_F',
+            resolve:{
+                fact:function(FactLoader){
+                    return FactLoader();
+                }
+            },
+            templateUrl:'/html/fact/update.html'
         });
 }]);
 
@@ -139,6 +158,50 @@ app.controller('list_P',['$scope','$http','Problem','PagSlice','$location',funct
         });
     }
 }]);
+app.controller('list_F',['$scope','$http','Fact','PagSlice','$location',function($scope,$http,Fact,PagSlice,$location){
+//    $scope.actions = actions;
+    var fetch = function(a,b,callback){
+        $http.get('/fact/page/'+a+'/'+b).success(callback);
+    };
+    var pages = PagSlice(fetch,10);
+    $scope.actions = pages;
+    $scope.fields = ['id','department','car','production_variety','process','production_line','group','content','node_name','person'];
+    $scope.title = "问题处理事实树管理";
+    $scope.new = function(){
+        $location.path('/fact/new');
+    };
+    $scope.remove = function(index){
+        var _id = pages.currentItems[index]._id;
+        console.log(pages.currentItems[index].id);
+        Fact.delete({_id:_id});
+        $location.path('/fact');
+    };
+    $scope.del = function(){
+        var temp = pages.currentItems;
+        for(var i = 0 ; i < temp.length;i++){
+            console.log(temp[i].flag);
+            if(temp[i].flag){
+                Fact.delete({_id:temp[i]._id});
+            }
+        }
+    };
+    $scope.search = function(){
+        var key = $scope.keyWord,
+            value = $scope.choose;
+        $http.get('/fact/search/'+value+'/'+key).success(function(data){
+            console.log(data);
+            $scope.actions.currentItems = data;
+            $scope.actions.total = 1;
+        });
+    }
+}]);
+
+
+
+
+
+
+
 app.controller('new_A',['$scope','Action','$location',function($scope,Action,$location){
     $scope.action = {};
     $scope.title = "添加元方案";

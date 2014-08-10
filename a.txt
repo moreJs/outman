@@ -1,7 +1,0 @@
-<<<<<<< HEAD
-this is a new branch  master
-=======
-this is a new branch
-
-this is other brance
->>>>>>> feature1

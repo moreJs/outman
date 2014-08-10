@@ -30,8 +30,16 @@
         <tr ng-repeat = "action in actions.currentItems" >
             <td><input type="checkbox"  ng-model="action.flag"></td>
             <td>{{action.id}}</td>
-            <td>{{action.title}}</td>
-            <td><a ng-href="/#/problem/update/{{action._id}}">编辑</a><a ng-click="remove($index)">删除</a></td>
+            <td>{{action.department}}</td>
+            <td>{{action.car}}</td>
+            <td>{{action.production_variety}}</td>
+            <td>{{action.process}}</td>
+            <td>{{action.production_line}}</td>
+            <td>{{action.group}}</td>
+            <td>{{action.content}}</td>
+            <td>{{action.node_name}}</td>
+            <td>{{action.person}}</td>
+            <td><a ng-href="/#/problem/update/{{action._id}}">编辑</a><a ng-click="remove($index)">删除</a><show item="action"></show></td>
         </tr>
     </table>
 </section>

@@ -2,13 +2,16 @@
 <html ng-app="batman">
 <head>
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <link rel = "stylesheet"   href="/stylesheets/reset.css"    type = "text/css"/>
     <link rel = "stylesheet"  href="/stylesheets/main.css"   type="text/css"/>
     <script src = "/javascripts/ng/angular.min.js"></script>
     <script src = "/javascripts/ng/angular-route.min.js"></script>
     <script src = "/javascripts/ng/angular-resource.min.js"></script>
+    <script src = "/javascripts/directive.js"></script>
     <script src = "/javascripts/services.js"></script>
     <script src = "/javascripts/controllers.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src = "/javascripts/main.js"></script>
 </head>
 <body>
@@ -32,7 +35,7 @@
             <li>
                 <a>事实库管理</a>
                 <ul>
-                    <li><a href="">问题处理事实库</a></li>
+                    <li><a href="#/fact">问题处理事实库</a></li>
                 </ul>
             </li>
             <li>

@@ -1,0 +1,41 @@
+.node circle {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 5px;
+}
+
+.node {
+    font: 15px sans-serif;
+    color: #fff;
+}
+
+.link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 3px;
+}
+.mask{
+    background: #000;
+    opacity: 0.75;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+svg{
+    padding: 20px;
+    padding-left: 50px;
+    border-radius: 20px;
+    position: fixed;
+    background: #fff url(/images/close.png) no-repeat right top;
+    z-index: 2;
+}
+svg button{
+    width: 38px;
+    height: 38px;
+    background: #000000 url(/images/close.png);
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 3;
+}

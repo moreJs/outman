@@ -4,6 +4,7 @@ body{
     display: -webkit-box;
     -webkit-box-orient:vertical;
     font-family: "Microsoft YaHei", Helvetica, Arial, sans-serif;
+    position: relative;
 }
 header{
     height: 60px;

@@ -7,7 +7,9 @@ service.factory('Action',['$resource',function($resource){
 service.factory('Problem',['$resource',function($resource){
     return $resource('/problem/:_id',{_id:'@_id'});
 }]);
-
+service.factory('Fact',['$resource',function($resource){
+    return $resource('/fact/:_id',{_id:'@_id'});
+}]);
 //整体加载器
 service.factory('MultiActionLoader',['Action','$q',function(Action,$q){
     return function(){
@@ -31,6 +33,17 @@ service.factory('MultiProblemLoader',['Problem','$q',function(Problem,$q){
         return delay.promise;
     };
 }]);
+service.factory('MultiFactLoader',['Fact','$q',function(Fact,$q){
+    return function(){
+        var delay = $q.defer();
+        Fact.query(function(facas){
+            delay.resolve(facas);
+        },function(){
+            delay.reject("unable to fetch action");
+        });
+        return delay.promise;
+    };
+}]);
 //单个加载器
 service.factory('ActionLoader',['Action','$route','$q',function(Action,$route,$q){
     return function(){
@@ -48,6 +61,17 @@ service.factory('ProblemLoader',['Problem','$route','$q',function(Problem,$route
         var delay = $q.defer();
         Problem.get({_id:$route.current.params._id},function(problem){
             delay.resolve(problem);
+        },function(){
+            delay.reject('unable to fetch action');
+        });
+        return delay.promise;
+    }
+}]);
+service.factory('FactLoader',['Fact','$route','$q',function(Fact,$route,$q){
+    return function(){
+        var delay = $q.defer();
+        Fact.get({_id:$route.current.params._id},function(fact){
+            delay.resolve(fact);
         },function(){
             delay.reject('unable to fetch action');
         });
