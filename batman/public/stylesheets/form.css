@@ -1,15 +1,49 @@
+div#main article section:nth-of-type(2) form.newF{
+     font-size: 1rem;
+     margin: 10px auto;
+     /*  width: 250px;*/
+ }
 div#main article section:nth-of-type(2) form.new{
     font-size: 1rem;
     margin: 10px auto;
     width: 250px;
 }
+div#main article section:nth-of-type(2) form.newF div{
+    position: relative;
+}
 div#main article section:nth-of-type(2) form.new div{
     position: relative;
+}
+div#main article section:nth-of-type(2) form.newF div.factcontent{
+    float: left;
+    width: 40%;
+}
+div#main article section:nth-of-type(2) form.newF div.children{
+    float: right;
+    width: 55%;
+}
+div#main article section:nth-of-type(2) form.newF div.tree_footer{
+    float: left;
+    width: 100%;
+}
+div#main article section:nth-of-type(2) form.newF div.tree_footer a{
+   margin-left: 45%;
+}
+
+div#main article section:nth-of-type(2) form.newF div.factcontent label{
+    padding-left: 40px;
+}
+div#main article section:nth-of-type(2) form.newF div.factcontent  input{
+    position: absolute;
+    right: 0;
+    top: 10px;
+    width: 60%;
 }
 div#main article section:nth-of-type(2) form.new input{
     position: absolute;
     right: 0;
     top: 10px;
+    width: 60%;
 }
 div#main article section:nth-of-type(2) form.new div a {
     margin-left: 170px;

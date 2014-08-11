@@ -1,10 +1,12 @@
 var direcive = angular.module('batman.direcive',[]);
 
+
+// 负责展示动画的指令
 direcive.directive('show',function(){
     return {
         restrict:'EA',
         scope :{obj:'=item'},
-        template : '<a>动画</a>',
+        template : '<a>可视化</a>',
         replace : true,
         link : function(scope,ele,attrs){
             var eles = ele[0];
@@ -89,3 +91,51 @@ var go = function(url){
     });
     d3.select(self.frameElement).style("height", height + "px");
 };
+
+
+//负责添加问题处理事实树的指令
+
+direcive.directive('tree',function(){
+    return{
+        restrict : 'EA',
+        replace : true,
+        template : '<div class="Ng_tree">' +
+                     '<div class="tree_title">第一次尝试</div>' +
+                     '<div class="tree_content">' +
+                              '<div>原因节点：<input ng-repeat="len in r_length" name="reason" type="text"/></div><div><a ng-click="add()">添加原因</a>  <a ng-click="sure()" class="sure"> 确定</a></div>' +
+                               '<div ng-repeat="le in r_length">方案节点({{le.value}})：<input ng-repeat="l in a_length" name="reason" type="text"/><div><a ng-click="add()">添加方案</a>  <a ng-click="sure()" class="sure"> 确定</a></div></div>' +
+                               '<div>效果:<input type="text" name="xiaoguo"/></div>' +
+                               '<div><a ng-click="sure()"> 确定</a></div>' +
+                     '</div>',
+        link : function(scope,ele,attrs){
+            scope.r_length = [{}];
+            scope.a_length = [{}];
+            scope.add = function(){
+/*                var input = document.createElement('input');
+                input.name="reason";
+                input.type="text";
+                var content = ele[0].getElementsByClassName('tree_content')[0];
+                content.firstElementChild.appendChild(input);*/
+                var input = ele[0].querySelector('input[type="text"]:last-child');
+                scope.r_length[scope.r_length.length-1].value = input.value;
+                scope.r_length.push({});
+            }
+            scope.sure = function(){
+                add();
+                var inputs = ele[0].querySelectorAll('input[type="text"]');
+                console.log(inputs);
+                Array.prototype.forEach.call(inputs,function(input){
+                    input.disabled = "disabled";
+                });
+            }
+            var add = function(){
+                var input = ele[0].querySelector('input[type="text"]:last-child');
+                scope.r_length[scope.r_length.length-1].value = input.value;
+            }
+        }
+    }
+});
+
+
+
+

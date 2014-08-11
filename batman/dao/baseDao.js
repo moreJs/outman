@@ -27,13 +27,13 @@
 		   	 });	
 		 };
 		 
-		 BaseDao.prototype.getByQuery = function (query  ,callback){
+		 BaseDao.prototype.getByQuery = function (query ,callback){
              this.model.find(query ,function(err , models){
 		 	    	      if(!err){
                            for(var i in query){
                                console.log(i + "" + query[i]);
                            }
-		 	    	      	  console.log('query ok!...'+models);
+		 	    	      	  console.log('query ok!...' + models);
 		 	    	      	  callback(null,models);
 		 	    	      	}else {
 		 	    	      	   console.log('query wrong!');

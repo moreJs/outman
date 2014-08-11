@@ -165,7 +165,9 @@ app.controller('list_F',['$scope','$http','Fact','PagSlice','$location',function
     };
     var pages = PagSlice(fetch,10);
     $scope.actions = pages;
-    $scope.fields = ['id','department','car','production_variety','process','production_line','group','content','node_name','person'];
+    $scope.fields1 = ['id','department','car','production_variety','process','production_line','group','content','node_name','person' +
+        '','branchs.reason_actions','branchs.result','branchs.reason_actions.reason','branchs.reason_actions.actions.name'];
+    $scope.fields = ['id','department','car','production_variety','process','production_line','group','content','node_name','person' ];
     $scope.title = "问题处理事实树管理";
     $scope.new = function(){
         $location.path('/fact/new');
@@ -191,7 +193,7 @@ app.controller('list_F',['$scope','$http','Fact','PagSlice','$location',function
         $http.get('/fact/search/'+value+'/'+key).success(function(data){
             console.log(data);
             $scope.actions.currentItems = data;
-            $scope.actions.total = 1;
+            $scope.actions.total = data.length;
         });
     }
 }]);
@@ -216,5 +218,13 @@ app.controller('new_P',['$scope','Problem','$location',function($scope,Problem,$
     $scope.save = function(){
         Problem.save({},$scope.action);
         $location.path('/problem');
+    }
+}]);
+app.controller('new_F',['$scope','Fact','$location',function($scope,Fact,$location){
+    $scope.action = {};
+    $scope.title = "添加问题处理事实树";
+    $scope.save = function(){
+        Fact.save({},$scope.action);
+        $location.path('/fact');
     }
 }]);

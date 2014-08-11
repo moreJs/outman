@@ -17,4 +17,8 @@ var Action = db.model('Action',Action,'action');
 var _action = new BaseDao(Action);
 _action.name = "action";
 module.exports = _action;
-
+/*(function(){
+    _action.getByQuery({"id":1},function(err,docs){
+        console.log(docs);
+    })
+})();*/

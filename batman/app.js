@@ -59,26 +59,8 @@ app.get('/test', function(req,res){
         "actions" :[{"name":"c3"}]
     }
      ],
-       "result" : "no"
-   }, {
-            "reason_actions" : [
-                {
-                    "reason" : "a1",
-                    "actions" :  [{"name":"c1"},{"name":"c2"}]
-                },
-                {
-                    "reason" : "a2",
-                    "actions" :[{"name":"c3"}]
-                }
-            ],
-            "result" : "no"
-        },{
-    "reason_actions" :[ {
-        "reason" :"a3",
-        "actions" : [{"name":"c4"}]
-}],
-        "result" : "yes"
-}]
+       "result" : "123"
+   }]
 };
     var _fact = require('./dao/fact');
     _fact.add(fact,function(err){

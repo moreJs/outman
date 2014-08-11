@@ -1,5 +1,4 @@
 action_dao = require("../../dao/action");
-base = require("../baseDao");
 function show(req,res){
     var id = req.params.id;
     action_dao.getById(id,function(err,model){
@@ -50,7 +49,7 @@ function searchPage(req,res){
     var key = req.params.key,
         value = req.params.value;
     var query = {};
-    query[key] = value;
+    query[key] = parseInt(value);
     action_dao.getByQuery(query,function(err,models){
         res.send(models);
     });

@@ -39,3 +39,10 @@ svg button{
     top: 0;
     z-index: 3;
 }
+div.tree_content input[type="text"]{
+    width: 100px;
+    margin-left: 10px;
+}
+div.tree_content a.sure{
+    margin-left: 20px;
+}
