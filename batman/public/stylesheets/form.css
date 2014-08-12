@@ -48,3 +48,15 @@ div#main article section:nth-of-type(2) form.new input{
 div#main article section:nth-of-type(2) form.new div a {
     margin-left: 170px;
 }
+input[type="text"],a{
+    border: 1px solid deepskyblue;
+    border-radius: 5px;
+    margin: 5px 10px;
+}
+ul a{
+    border: none;
+    border-radius: 0px;
+}
+input[type="text"]:active{
+    box-shadow: 1px 1px 2px #eee;
+}

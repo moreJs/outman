@@ -46,3 +46,14 @@ div.tree_content input[type="text"]{
 div.tree_content a.sure{
     margin-left: 20px;
 }
+
+div.tree_content a.left_padding{
+    margin-left: 20px;
+}
+.padding_right_43{
+ padding-right: 43px;
+}
+
+.padding_right_87{
+    padding-right: 87px;
+}

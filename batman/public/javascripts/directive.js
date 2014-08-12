@@ -100,34 +100,50 @@ direcive.directive('tree',function(){
         restrict : 'EA',
         replace : true,
         template : '<div class="Ng_tree">' +
-                     '<div class="tree_title">第一次尝试</div>' +
+                      '<div ng-repeat="item in action.branchs">' +
+                     '<div class="tree_title">第{{$index + 1}}次尝试</div>' +
                      '<div class="tree_content">' +
-                              '<div>原因节点：<input ng-repeat="len in r_length" name="reason" type="text"/></div><div><a ng-click="add()">添加原因</a>  <a ng-click="sure()" class="sure"> 确定</a></div>' +
-                               '<div ng-repeat="le in r_length">方案节点({{le.value}})：<input ng-repeat="l in a_length" name="reason" type="text"/><div><a ng-click="add()">添加方案</a>  <a ng-click="sure()" class="sure"> 确定</a></div></div>' +
-                               '<div>效果:<input type="text" name="xiaoguo"/></div>' +
-                               '<div><a ng-click="sure()"> 确定</a></div>' +
-                     '</div>',
+                               '<div ng-repeat="reason in item.reason_actions"><label>原因节点(no:{{$index + 1}})：</label><input ng-model="reason.reason" type="text"/>' +
+                                    '<div ><label class="padding_right_43">方案节点：</label><input ng-repeat="act in reason.actions" ng-model="act.name" type="text"/><a class = "left_padding" ng-click="add_action($index,item)">添加方案</a></div>' +
+                               '</div>' +
+                               '<div><label class="padding_right_87">效果:</label><input type="text" ng-model="item.result"/></div>' +
+                               '<div><a ng-click="add_reason_actions($index)">添加原因</a> <a ng-click="sure()"> 确定</a></div>' +
+                     '</div>' +
+                    '</div>' +
+                    '</div>',
         link : function(scope,ele,attrs){
+            scope.action.branchs = [
+                {
+                    "reason_actions" : [
+                        {
+                            "reason" : "",
+                            "actions" :  [{"name":""}]
+                        }
+                    ],
+                    "result" : ""
+                }];
+            scope.add_reason_actions = function(index){
+               var item = scope.action.branchs[index];
+                item["reason_actions"].push({
+                    "reason" : "",
+                    "actions" :  [{"name":""}]
+                });
+            };
+            scope.add_action = function(index,key){
+                key["reason_actions"][index]["actions"].push({"name":""});
+            };
             scope.r_length = [{}];
+            scope.r_show = true;
             scope.a_length = [{}];
             scope.add = function(){
-/*                var input = document.createElement('input');
-                input.name="reason";
-                input.type="text";
-                var content = ele[0].getElementsByClassName('tree_content')[0];
-                content.firstElementChild.appendChild(input);*/
                 var input = ele[0].querySelector('input[type="text"]:last-child');
                 scope.r_length[scope.r_length.length-1].value = input.value;
                 scope.r_length.push({});
-            }
+            };
             scope.sure = function(){
                 add();
-                var inputs = ele[0].querySelectorAll('input[type="text"]');
-                console.log(inputs);
-                Array.prototype.forEach.call(inputs,function(input){
-                    input.disabled = "disabled";
-                });
-            }
+                scope.r_show = false;
+            };
             var add = function(){
                 var input = ele[0].querySelector('input[type="text"]:last-child');
                 scope.r_length[scope.r_length.length-1].value = input.value;
