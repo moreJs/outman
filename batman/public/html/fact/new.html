@@ -51,28 +51,12 @@
         </div>
         </div>
         <div class="children">
-            <tree/>
+            <trees>
+                <tree ng-repeat="item in action.branchs"></tree>
+            </trees>
         </div>
         <div class="tree_footer">
             <a  ng-click = "save()">提交</a>
         </div>
     </form>
 </section>
-
-
-
-"branchs":[
-{
-"reason_actions" : [
-{
-"reason" : "a1",
-"actions" :  [{"name":"c1"},{"name":"c2"}]
-},
-{
-"reason" : "a2",
-"actions" :[{"name":"c3"}]
-}
-],
-"result" : "123"
-}]
-};

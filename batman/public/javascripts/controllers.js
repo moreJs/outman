@@ -226,5 +226,15 @@ app.controller('new_F',['$scope','Fact','$location',function($scope,Fact,$locati
     $scope.save = function(){
         Fact.save({},$scope.action);
         $location.path('/fact');
-    }
+    };
+    $scope.action.branchs = [
+        {
+            "reason_actions" : [
+                {
+                    "reason" : "",
+                    "actions" :  [{"name":""}]
+                }
+            ],
+            "result" : ""
+        }];
 }]);

@@ -57,3 +57,16 @@ div.tree_content a.left_padding{
 .padding_right_87{
     padding-right: 87px;
 }
+.tree_title{
+    background-color: #000000;
+    color: #fff;
+    padding-left: 20px;
+    border: 1px solid #fff;
+}
+.tree_content{
+    padding-left: 20px;
+    border: 1px solid #000000;
+}
+.Ng_tree{
+    margin-right: 20px;
+}

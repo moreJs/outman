@@ -94,26 +94,51 @@ var go = function(url){
 
 
 //负责添加问题处理事实树的指令
+direcive.directive('trees',function(){
+    return{
+        restrict:'EA',
+        replace:true,
+        transclude:true,
+        template:'<div ng-transclude></div>',
+        controller:function(){
+            var trees = [];
+            this.getOpened = function(select){
+                angular.forEach(trees,function(item){
+                    if(item != select){
+                        item.showMe = false;
+                    }
+                });
+            }
+            this.add = function(sc){
+                trees.push(sc);
+            }
+        }
+    }
+});
 
 direcive.directive('tree',function(){
     return{
         restrict : 'EA',
         replace : true,
         template : '<div class="Ng_tree">' +
-                      '<div ng-repeat="item in action.branchs">' +
-                     '<div class="tree_title">第{{$index + 1}}次尝试</div>' +
-                     '<div class="tree_content">' +
+                     '<div class="tree_title" ng-click="toggle()">第{{$index + 1}}次尝试</div>' +
+                     '<div class="tree_content" ng-show="showMe">' +
                                '<div ng-repeat="reason in item.reason_actions"><label>原因节点(no:{{$index + 1}})：</label><input ng-model="reason.reason" type="text"/>' +
-                                    '<div ><label class="padding_right_43">方案节点：</label><input ng-repeat="act in reason.actions" ng-model="act.name" type="text"/><a class = "left_padding" ng-click="add_action($index,item)">添加方案</a></div>' +
+                                    '<div ><label class="padding_right_43">方案节点：</label><input ng-repeat="act in reason.actions" ng-model="act.name" type="text"/><a class = "left_padding" ng-click="add_action($index)" ng-show="button">添加方案</a></div>' +
                                '</div>' +
                                '<div><label class="padding_right_87">效果:</label><input type="text" ng-model="item.result"/></div>' +
-                               '<div><a ng-click="add_reason_actions($index)">添加原因</a> <a ng-click="sure()"> 确定</a></div>' +
-                     '</div>' +
+                               '<div><a ng-click="add_reason_actions()" ng-show="button">添加原因</a> <a ng-click="sure()" ng-show="button"> 确定</a></div>' +
                     '</div>' +
                     '</div>',
-        link : function(scope,ele,attrs){
-            scope.action.branchs = [
-                {
+        require : '^?trees',
+        link : function(scope,ele,attrs,treesController){
+            scope.showMe = false;
+            scope.button = true;
+            treesController.add(scope);
+            scope.sure = function(){
+                scope.showMe = !scope.showMe;
+                scope.button = false;
+                scope.action.branchs.push( {
                     "reason_actions" : [
                         {
                             "reason" : "",
@@ -121,33 +146,21 @@ direcive.directive('tree',function(){
                         }
                     ],
                     "result" : ""
-                }];
-            scope.add_reason_actions = function(index){
-               var item = scope.action.branchs[index];
-                item["reason_actions"].push({
+                });
+            };
+            scope.toggle = function(){
+                scope.showMe = !scope.showMe;
+               treesController.getOpened(scope);
+            };
+            scope.add_reason_actions = function(){
+                scope.item["reason_actions"].push({
                     "reason" : "",
                     "actions" :  [{"name":""}]
                 });
             };
-            scope.add_action = function(index,key){
-                key["reason_actions"][index]["actions"].push({"name":""});
+            scope.add_action = function(index){
+                scope.item["reason_actions"][index]["actions"].push({"name":""});
             };
-            scope.r_length = [{}];
-            scope.r_show = true;
-            scope.a_length = [{}];
-            scope.add = function(){
-                var input = ele[0].querySelector('input[type="text"]:last-child');
-                scope.r_length[scope.r_length.length-1].value = input.value;
-                scope.r_length.push({});
-            };
-            scope.sure = function(){
-                add();
-                scope.r_show = false;
-            };
-            var add = function(){
-                var input = ele[0].querySelector('input[type="text"]:last-child');
-                scope.r_length[scope.r_length.length-1].value = input.value;
-            }
         }
     }
 });
