@@ -40,8 +40,15 @@ svg button{
     z-index: 3;
 }
 div.tree_content input[type="text"]{
-    width: 100px;
+    width: 120px;
     margin-left: 10px;
+}
+div.tree_content select{
+    width: 250px;
+    height: 50px;
+}
+div.tree_content select{
+    display: block;
 }
 div.tree_content a.sure{
     margin-left: 20px;

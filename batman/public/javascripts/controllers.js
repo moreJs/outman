@@ -50,12 +50,26 @@ app.config(['$routeProvider',function($routeProvider){
             templateUrl:'/html/fact/list.html'
         }).when('/fact/new',{
             controller:'new_F',
+            resolve:{
+                p_opts:function(MultiProblemLoader){
+                    return MultiProblemLoader();
+                },
+                a_opts:function(MultiActionLoader){
+                    return MultiActionLoader();
+                }
+            },
             templateUrl:'/html/fact/new.html'
         }).when('/fact/update/:_id',{
             controller:'update_F',
             resolve:{
                 fact:function(FactLoader){
                     return FactLoader();
+                },
+                p_opts:function(MultiProblemLoader){
+                    return MultiProblemLoader();
+                },
+                a_opts:function(MultiActionLoader){
+                    return MultiActionLoader();
                 }
             },
             templateUrl:'/html/fact/update.html'
@@ -84,6 +98,17 @@ app.controller('update_P',['$scope','Problem','problem','$location',function($sc
         $location.path('/problem');
     };
 }]);
+app.controller('update_F',['$scope','Fact','p_opts','a_opts','fact','$location',function($scope,Fact,p_opts,a_opts,fact,$location){
+    $scope.action = fact;
+    $scope.p_opts = p_opts ;
+    $scope.a_opts = a_opts;
+    $scope.title = "修改问题处理事实树类";
+    $scope.submit = function(){
+        var a = new Fact(fact);
+        a.$save();
+        $location.path('/fact');
+    };
+}]);
 app.controller('list_A',['$scope','$http','Action','PagSlice','$location',function($scope,$http,Action,PagSlice,$location){
 //    $scope.actions = actions;
     var fetch = function(a,b,callback){
@@ -99,15 +124,18 @@ app.controller('list_A',['$scope','$http','Action','PagSlice','$location',functi
     $scope.remove = function(index){
         var _id = pages.currentItems[index]._id;
         console.log(pages.currentItems[index].id);
+        $scope.actions.currentItems.splice(index,1);
+        $scope.actions.total--;
         Action.delete({_id:_id});
         $location.path('/action');
     };
     $scope.del = function(){
         var temp = pages.currentItems;
-        for(var i = 0 ; i < temp.length;i++){
-            console.log(temp[i].flag);
+        for(var i = temp.length -1 ; i >= 0 ;i--){
             if(temp[i].flag){
                 Action.delete({_id:temp[i]._id});
+                $scope.actions.currentItems.splice(i,1);
+                $scope.actions.total--;
             }
         }
     };
@@ -136,15 +164,18 @@ app.controller('list_P',['$scope','$http','Problem','PagSlice','$location',funct
     $scope.remove = function(index){
         var _id = pages.currentItems[index]._id;
         console.log(pages.currentItems[index].id);
+        $scope.actions.currentItems.splice(index,1);
+        $scope.actions.total--;
         Problem.delete({_id:_id});
         $location.path('/problem');
     };
     $scope.del = function(){
         var temp = pages.currentItems;
-        for(var i = 0 ; i < temp.length;i++){
-            console.log(temp[i].flag);
+        for(var i = temp.length -1 ; i >= 0 ;i--){
             if(temp[i].flag){
                 Problem.delete({_id:temp[i]._id});
+                $scope.actions.currentItems.splice(i,1);
+                $scope.actions.total--;
             }
         }
     };
@@ -176,16 +207,20 @@ app.controller('list_F',['$scope','$http','Fact','PagSlice','$location',function
         var _id = pages.currentItems[index]._id;
         console.log(pages.currentItems[index].id);
         Fact.delete({_id:_id});
+        $scope.actions.currentItems.splice(index,1);
+        $scope.actions.total--;
         $location.path('/fact');
     };
     $scope.del = function(){
         var temp = pages.currentItems;
-        for(var i = 0 ; i < temp.length;i++){
-            console.log(temp[i].flag);
+        for(var i = temp.length -1 ; i >= 0 ;i--){
             if(temp[i].flag){
-                Fact.delete({_id:temp[i]._id});
+               Fact.delete({_id:temp[i]._id});
+               $scope.actions.currentItems.splice(i,1);
+               $scope.actions.total--;
             }
         }
+        $location.path('/fact');
     };
     $scope.search = function(){
         var key = $scope.keyWord,
@@ -194,6 +229,7 @@ app.controller('list_F',['$scope','$http','Fact','PagSlice','$location',function
             console.log(data);
             $scope.actions.currentItems = data;
             $scope.actions.total = data.length;
+            $scope.actions.resize();
         });
     }
 }]);
@@ -220,9 +256,11 @@ app.controller('new_P',['$scope','Problem','$location',function($scope,Problem,$
         $location.path('/problem');
     }
 }]);
-app.controller('new_F',['$scope','Fact','$location',function($scope,Fact,$location){
+app.controller('new_F',['$scope','Fact','p_opts','a_opts','$location',function($scope,Fact,p_opts,a_opts,$location){
     $scope.action = {};
     $scope.title = "添加问题处理事实树";
+    $scope.p_opts = p_opts;
+    $scope.a_opts = a_opts
     $scope.save = function(){
         Fact.save({},$scope.action);
         $location.path('/fact');

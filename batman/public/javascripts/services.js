@@ -94,6 +94,10 @@ service.factory('PagSlice',function(){
            isPro: function(){
                return this.currentOffSet != 0;
            },
+            resize : function(){
+                this.currentOffSet = 0;
+                this.hasNext = false;
+            },
            load : function(){
                var that = this;
                fetchFunction(that.currentOffSet,pageSize+1,function(data){

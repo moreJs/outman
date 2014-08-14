@@ -99,6 +99,17 @@
                        	   	}
                        	});		   	  	      	
 		   	  	};
+/*       BaseDao.prototype.update = function (conditions ,update, option1 , option2, option3 ,callback){
+        this.model.update(conditions ,update,option1 , option2, option3,function(err){
+            if(err){
+                console.log('update wrong!');
+                callback(err);
+            }else{
+                console.log('update ok!!');
+                callback(null);
+            }
+        });
+    };*/
 
 
 			 module.exports = BaseDao;

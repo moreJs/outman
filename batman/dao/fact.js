@@ -1,24 +1,6 @@
 /**
  * Created by User on 14-8-9.
  */
-/*
-var test = {
-“id” ： “1001”，
-“f_time”:  “2010/10/1 14:00”，
-“department”：“007”，
-“car”： “XXX”，
-“production_variety”：“后地板”，
-“process”：“05”，
-“production_line”：“A线”，
-“group”：“甲班”，
-“d_time”：“60”,
-“content”:“OP10制件缩径”，
-“node_name”：“缩径”,
-“person”：“张三”，
-
-}*/
-
-
 
 
 var _db = require('./db'),

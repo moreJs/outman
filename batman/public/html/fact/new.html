@@ -11,7 +11,9 @@
         </div>
         <div>
             <label for="node_name">问题节点: </label>
-            <input type="text" name = "node_name" id = "node_name" ng-model = "action.node_name" />
+            <select ng-model="action.node_name"  name = "node_name">
+                <option ng-repeat="opt in p_opts" value="{{opt.title}}">{{opt.title}}</option>
+            </select>
         </div>
         <div>
             <label for="department">部门:</label>

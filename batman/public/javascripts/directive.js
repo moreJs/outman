@@ -123,8 +123,8 @@ direcive.directive('tree',function(){
         template : '<div class="Ng_tree">' +
                      '<div class="tree_title" ng-click="toggle()">第{{$index + 1}}次尝试</div>' +
                      '<div class="tree_content" ng-show="showMe">' +
-                               '<div ng-repeat="reason in item.reason_actions"><label>原因节点(no:{{$index + 1}})：</label><input ng-model="reason.reason" type="text"/>' +
-                                    '<div ><label class="padding_right_43">方案节点：</label><input ng-repeat="act in reason.actions" ng-model="act.name" type="text"/><a class = "left_padding" ng-click="add_action($index)" ng-show="button">添加方案</a></div>' +
+                               '<div ng-repeat="reason in item.reason_actions"><label>原因节点(no:{{$index + 1}})：</label><select ng-model="reason.reason" ><option ng-repeat="opt in p_opts" value="{{opt.title}}" sel1>{{opt.title}}</option></select>' +
+                                    '<div ><label class="padding_right_43">方案节点：</label><select ng-repeat="act in reason.actions" ng-model="act.name" ><option ng-repeat="opt in a_opts" value="{{opt.title}}" sel2>{{opt.title}}</option></select><a class = "left_padding" ng-click="add_action($index)" ng-show="button">添加方案</a></div>' +
                                '</div>' +
                                '<div><label class="padding_right_87">效果:</label><input type="text" ng-model="item.result"/></div>' +
                                '<div><a ng-click="add_reason_actions()" ng-show="button">添加原因</a> <a ng-click="sure()" ng-show="button"> 确定</a></div>' +
@@ -161,6 +161,46 @@ direcive.directive('tree',function(){
             scope.add_action = function(index){
                 scope.item["reason_actions"][index]["actions"].push({"name":""});
             };
+        }
+    }
+});
+
+direcive.directive('sel',function(){
+    return{
+        restrict:'A',
+        link:function(scope,ele,attrs){
+            var eles = ele[0];
+            var a1 = scope.action.node_name,
+                a2 = scope.opt.title;
+            if(a1 == a2){
+                eles.setAttribute('selected','selected');
+            }
+        }
+    }
+});
+direcive.directive('sel1',function(){
+    return{
+        restrict:'A',
+        link:function(scope,ele,attrs){
+            var eles = ele[0];
+            var a1 = scope.reason.reason,
+                a2 = scope.opt.title;
+            if(a1 == a2){
+                eles.setAttribute('selected','selected');
+            }
+        }
+    }
+});
+direcive.directive('sel2',function(){
+    return{
+        restrict:'A',
+        link:function(scope,ele,attrs){
+            var eles = ele[0];
+            var a1 = scope.act.name,
+                a2 = scope.opt.title;
+            if(a1 == a2){
+                eles.setAttribute('selected','selected');
+            }
         }
     }
 });

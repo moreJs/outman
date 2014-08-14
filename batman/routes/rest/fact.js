@@ -55,7 +55,8 @@ function add(req,res){
 function update(req,res){
     var temp = req.body,
         _id = temp._id;
-    fact_dao.update({_id:_id},temp,{},function(err){
+    delete  temp._id;
+    fact_dao.update({_id:_id},temp,{ },function(err){
         if(err){
             res.send(err);
         }else{

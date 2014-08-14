@@ -33,13 +33,13 @@ div#main article section:nth-of-type(2) form.newF div.tree_footer a{
 div#main article section:nth-of-type(2) form.newF div.factcontent label{
     padding-left: 40px;
 }
-div#main article section:nth-of-type(2) form.newF div.factcontent  input{
+div#main article section:nth-of-type(2) form.newF div.factcontent  input,div#main article section:nth-of-type(2) form.newF div.factcontent  select{
     position: absolute;
     right: 0;
     top: 10px;
     width: 60%;
 }
-div#main article section:nth-of-type(2) form.new input{
+div#main article section:nth-of-type(2) form.new input,div#main article section:nth-of-type(2) form.new select{
     position: absolute;
     right: 0;
     top: 10px;
@@ -48,10 +48,11 @@ div#main article section:nth-of-type(2) form.new input{
 div#main article section:nth-of-type(2) form.new div a {
     margin-left: 170px;
 }
-input[type="text"],a{
+input[type="text"],select,a{
     border: 1px solid deepskyblue;
     border-radius: 5px;
     margin: 5px 10px;
+    text-align: center;
 }
 ul a{
     border: none;
