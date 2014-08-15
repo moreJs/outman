@@ -1,0 +1,45 @@
+<section>
+    <h1>{{title}}</h1>
+</section>
+<section>
+    <form>
+        类型：<select name = "field" ng-model="choose">
+        <option ng-repeat="field in fields1" value="{{field}}">{{field}}</option>
+              </select>
+        关键字 : <input type="text" name="keyword" ng-model="keyWord"/>
+        <a ng-click="search()">搜索</a>
+    </form>
+</section>
+<section>
+    <ul>
+       <!-- <li><a  ng-click = "new()">新建</a></li>-->
+        <li><a ng-click = "del()">批量删除</a></li>
+    </ul>
+    <select name="type">
+        <option value="0">请选择排序字段</option>
+        <option ng-repeat="field in fields1" value="{{field}}">{{field}}</option>
+    </select>
+</section>
+<section>
+    <table>
+        <tr>
+            <th><input type="checkbox"></th>
+            <th>效果</th>
+            <th>频数</th>
+            <th>操作</th>
+        </tr>
+        <tr ng-repeat = "action in actions.currentItems" >
+            <td><input type="checkbox"  ng-model="action.flag"></td>
+            <td>{{action.result}}</td>
+            <td>{{action.count}}</td>
+            <td><a ng-href="/#/net/update/{{action._id}}">编辑</a><a ng-click="remove($index)">删除</a><show item="action"></show></td>
+       </tr>
+    </table>
+</section>
+<section>
+    <span>共有相关信息<strong> {{actions.total}} </strong>条{{l}}</span>
+    <ul>
+        <li><a ng-href="" ng-show="actions.currentOffSet" ng-click="actions.pro()">&lt;&lt;  前一页</a></li>
+        <li><a ng-href="" ng-show="actions.hasNext" ng-click="actions.next()" >下一页  &gt;&gt;</a></li>
+    </ul>
+</section>

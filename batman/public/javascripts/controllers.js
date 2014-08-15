@@ -73,6 +73,14 @@ app.config(['$routeProvider',function($routeProvider){
                 }
             },
             templateUrl:'/html/fact/update.html'
+        }).when('/net',{
+            controller:'list_N',
+            resolve:{
+                nets:function(MultiNetLoader){
+                    return MultiNetLoader();
+                }
+            },
+            templateUrl:'/html/net/list.html'
         });
 }]);
 
@@ -234,6 +242,50 @@ app.controller('list_F',['$scope','$http','Fact','PagSlice','$location',function
     }
 }]);
 
+app.controller('list_N',['$scope','$http','Net','PagSlice','$location',function($scope,$http,Net,PagSlice,$location){
+//    $scope.actions = actions;
+    var fetch = function(a,b,callback){
+        $http.get('/net/page/'+a+'/'+b).success(callback);
+    };
+    var pages = PagSlice(fetch,10);
+    $scope.actions = pages;
+
+    $scope.fields1 = ['result','count','problems.name','branchs.reason','branchs.actions.name'];
+   // $scope.fields = ['id','department','car','production_variety','process','production_line','group','content','node_name','person' ];
+    $scope.title = "知识网络管理";
+    $scope.new = function(){
+        $location.path('/net/new');
+    };
+    $scope.remove = function(index){
+        var _id = pages.currentItems[index]._id;
+        console.log(pages.currentItems[index].id);
+        Net.delete({_id:_id});
+        $scope.actions.currentItems.splice(index,1);
+        $scope.actions.total--;
+        $location.path('/net');
+    };
+    $scope.del = function(){
+        var temp = pages.currentItems;
+        for(var i = temp.length -1 ; i >= 0 ;i--){
+            if(temp[i].flag){
+                Net.delete({_id:temp[i]._id});
+                $scope.actions.currentItems.splice(i,1);
+                $scope.actions.total--;
+            }
+        }
+        $location.path('/net');
+    };
+    $scope.search = function(){
+        var key = $scope.keyWord,
+            value = $scope.choose;
+        $http.get('/net/search/'+value+'/'+key).success(function(data){
+         //   console.log(data);
+            $scope.actions.currentItems = data;
+            $scope.actions.total = data.length;
+            $scope.actions.resize();
+        });
+    }
+}]);
 
 
 
