@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-with ,inital-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scaleable=no"/>
+    <title></title>
+</head>
+<body>
+<button class="cricle">cricle</button>
+<button class="line">line</button>
+<button class="star">star</button>
+<svg width="500" height="600" xmlns="http://www.w3.org/2000/svg">
+</svg>
+</body>
+<script>
+    var fact = {
+        "result" : "123",
+        "count" : "1001",
+        "problems":[{"name":"jack"},{"name":"robin"}],
+        "branchs":[    {
+                              "reason" : "reason1" ,
+                              "actions" : [{"name":"action1"},{"name":"action2"}]
+                  },  {
+                              "reason" : "reason2" ,
+                              "actions" : [{"name":"action3"},{"name":"action4"}]
+                  }]
+         };
+
+
+    var Tree = function(data){
+        this.data = data;
+        this.stack = [];
+        this.outer = document.querySelector('svg');
+        this.init();
+        this.createDom();
+    };
+    Tree.prototype.init = function(){
+        var outer = this.outer,
+            width = outer.getAttribute('width'),
+            height = outer.getAttribute('height');
+
+        this.width = width;
+        this.height = height;
+        this.row = height / 10;
+        this.col = width / 16;
+    };
+
+    Tree.prototype.createDom = function(){
+        //第一列
+        var data = this.data;
+        var problems = data["problems"],
+            len = problems.length,
+            pad = this.height / (len + 1);
+
+
+        for(var i = 0; i < len;i++){
+             var x = parseInt(2 * this.col),
+                 y = parseInt((i+1) * pad),
+                 key = problems[i];
+             this.stack.push(x+":"+y);
+             this.darwCricle(x,y);
+             this.addText(x,y-30,key.name);
+        }
+
+        //第二列
+        this.drawStar(this.col*6,this.height/2,30);
+
+        //画线
+        while(this.stack.length){
+            var temp = this.stack.pop();
+            var ans = temp.split(':');
+            console.log(temp);
+            this.drawline(ans[0],ans[1],this.col*6,this.height/2);
+        }
+
+        //第三列
+        var brancs =data['branchs'],
+            leng = brancs.length,
+            pading = this.height/(leng+1),
+            act = 0,
+            item = 0;
+
+        for(var k = 0; k < leng ; k++){
+            var temp = brancs[k],
+                act = act + temp["actions"].length;
+        }
+        var a_padding = this.height/(act+1);
+
+        for(var i = 0; i < leng;i++){
+            var x = 11 * this.col,
+                y = (i+1) * pading,
+                key = brancs[i];
+            this.darwCricle(x,y);
+            this.addText(x,y-30,key["reason"]);
+            this.drawline(this.col*6+30,this.height/2,x,y);
+
+
+            var temp = brancs[i]["actions"],
+                l = temp.length;
+            for(var m = 0; m < l;m++){
+               item++;
+               var xx = 15 * this.col,
+                   yy = item * a_padding,
+                   t_key = temp[i];
+                console.log(item);
+                this.darwCricle(xx,yy);
+                this.addText(xx,yy-30,t_key["name"]);
+                this.drawline(x,y,xx,yy);
+            }
+        }
+        this.addText(200,120,'出现频数：'+this.data["count"]);
+        this.addText(200,150,'效    果：'+this.data["result"]);
+    };
+
+    Tree.prototype.drawline = function(x1,y1,x2,y2){
+        var cri = document.createElementNS('http://www.w3.org/2000/svg',"line");
+        cri.setAttribute("x1",x1);
+        cri.setAttribute("y1",y1);
+        cri.setAttribute("x2",x2);
+        cri.setAttribute("y2",y2);
+        cri.setAttribute("fill","none");
+        cri.setAttribute("stroke"," #ccc");
+        cri.setAttribute("stroke-width","3");
+        this.outer.appendChild(cri);
+    }
+    Tree.prototype.drawStar = function(x,y,left){
+        var cri = document.createElementNS('http://www.w3.org/2000/svg',"polygon");
+        var box = [];
+        box.push(x);
+        box.push(y-left);
+        box.push(x);
+        box.push(y+left);
+        box.push(x+left);
+        box.push(y);
+        cri.setAttribute("points",box.join(' '));
+        cri.setAttribute("fill","none");
+        cri.setAttribute("stroke","steelblue");
+        cri.setAttribute("stroke-width","3");
+        this.outer.appendChild(cri);
+
+
+
+    };
+    Tree.prototype.addText = function(x,y,content){
+        var cri = document.createElementNS('http://www.w3.org/2000/svg',"text");
+        cri.setAttribute("x",x);
+        cri.setAttribute("y",y);
+        cri.appendChild(document.createTextNode(content));
+        this.outer.appendChild(cri);
+    };
+
+    Tree.prototype.darwCricle = function(x,y){
+        var cri = document.createElementNS('http://www.w3.org/2000/svg',"circle");
+        cri.setAttribute("cx",x);
+        cri.setAttribute("cy",y);
+        cri.setAttribute("r","20");
+        cri.setAttribute("fill","none");
+        cri.setAttribute("stroke","steelblue");
+        cri.setAttribute("stroke-width","3");
+        this.outer.appendChild(cri);
+    };
+
+    document.addEventListener('click',function(event){
+        var target = event.target;
+        switch (target.className){
+            case "cricle":
+                cricle();
+                break;
+            case "line":
+                line();
+                break;
+            case "star":
+                star();
+                break;
+        }
+    });
+    function cricle(){
+/*        var cri = document.createElementNS('http://www.w3.org/2000/svg',"circle");
+        cri.setAttribute("cx","100");
+        cri.setAttribute("cy","100");
+        cri.setAttribute("r","20");
+        cri.setAttribute("fill","red");
+        cri.setAttribute("stroke","blue");
+        cri.setAttribute("stroke-width","2");
+        document.querySelector('svg').appendChild(cri);*/
+        new Tree(fact);
+    }
+    function line(){
+        var cri = document.createElementNS('http://www.w3.org/2000/svg',"line");
+        cri.setAttribute("x1","200");
+        cri.setAttribute("y1","100");
+        cri.setAttribute("x2","220");
+        cri.setAttribute("y2","100");
+        cri.setAttribute("fill","red");
+        cri.setAttribute("stroke","blue");
+        cri.setAttribute("stroke-width","2");
+        document.querySelector('svg').appendChild(cri);
+    }
+    function star(){
+        var cri = document.createElementNS('http://www.w3.org/2000/svg',"polygon");
+        var box = [];
+        box.push(150);
+        box.push(150);
+        box.push(150);
+        box.push(200);
+        box.push(190);
+        box.push(175);
+        cri.setAttribute("points",box.join(' '));
+        cri.setAttribute("fill","red");
+        cri.setAttribute("stroke","blue");
+        cri.setAttribute("stroke-width","2");
+        document.querySelector('svg').appendChild(cri);
+    }
+</script>
+</html>

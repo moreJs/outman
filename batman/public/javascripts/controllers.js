@@ -81,7 +81,21 @@ app.config(['$routeProvider',function($routeProvider){
                 }
             },
             templateUrl:'/html/net/list.html'
-        });
+        }).when('/net/update/:_id',{
+        controller:'update_N',
+        resolve:{
+            fact:function(NetLoader){
+                return NetLoader();
+            },
+            p_opts:function(MultiProblemLoader){
+                return MultiProblemLoader();
+            },
+            a_opts:function(MultiActionLoader){
+                return MultiActionLoader();
+            }
+        },
+        templateUrl:'/html/net/update.html'
+    });
 }]);
 
 /*app.controller('list_A',['$scope','actions',function($scope,actions){
@@ -115,6 +129,17 @@ app.controller('update_F',['$scope','Fact','p_opts','a_opts','fact','$location',
         var a = new Fact(fact);
         a.$save();
         $location.path('/fact');
+    };
+}]);
+app.controller('update_N',['$scope','Net','p_opts','a_opts','fact','$location',function($scope,Net,p_opts,a_opts,fact,$location){
+    $scope.action = fact;
+    $scope.p_opts = p_opts ;
+    $scope.a_opts = a_opts;
+    $scope.title = "修改问题处理知识";
+    $scope.submit = function(){
+        var a = new Net(fact);
+        a.$save();
+        $location.path('/net');
     };
 }]);
 app.controller('list_A',['$scope','$http','Action','PagSlice','$location',function($scope,$http,Action,PagSlice,$location){

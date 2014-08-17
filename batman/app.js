@@ -36,15 +36,15 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/test', function(req,res){
  var fact = {
-     "result" : "123",
-        "count" : "1001",
-        "problems":[{"name":"jack"},{"name":"robin"}],
+        "result" : "问题解决了",
+        "count" : "21",
+        "problems":[{"name":"制件缺陷"},{"name":"拉毛"}],
         "branchs":[    {
-        "reason" : "reason1" ,
-        "actions" : [{"name":"action1"},{"name":"action2"}]
+        "reason" : "孔变形" ,
+        "actions" : [{"name":"部件维修"},{"name":"清理废料"}]
     },  {
-        "reason" : "reason2" ,
-        "actions" : [{"name":"action3"},{"name":"action4"}]
+        "reason" : "缩径" ,
+        "actions" : [{"name":"打磨"},{"name":"调整压力"}]
     }]
 };
     var _fact = require('./dao/net');

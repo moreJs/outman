@@ -1,6 +1,33 @@
 var direcive = angular.module('batman.direcive',[]);
 
 
+
+
+direcive.directive('shownet',function(){
+    return {
+        restrict:'EA',
+        scope :{obj:'=item'},
+        template : '<a>可视化</a>',
+        replace : true,
+        link : function(scope,ele,attrs){
+            var eles = ele[0];
+            eles.addEventListener('click',function(event){
+                event.preventDefault();
+                mask();
+              //  go("/flare/"+scope.obj._id);
+                var a = new Tree(scope.obj);
+                var swidth = document.documentElement.scrollWidth,
+                    sheight = document.documentElement.scrollHeight,
+                    width = a.outer.getAttribute("width"),
+                    height = a.outer.getAttribute("height");
+                a.outer.style.left = (swidth-width)/2;
+                a.outer.style.top = (sheight-height)/2;
+                document.body.appendChild(a.outer);
+                click();
+            },true);
+        }
+    }
+});
 // 负责展示动画的指令
 direcive.directive('show',function(){
     return {
@@ -164,7 +191,53 @@ direcive.directive('tree',function(){
         }
     }
 });
-
+direcive.directive('tree1',function(){
+    return{
+        restrict : 'EA',
+        replace : true,
+        template : '<div class="Ng_tree">' +
+            '<div class="tree_title" ng-click="toggle()">原因{{$index + 1}}</div>' +
+            '<div class="tree_content" ng-show="showMe">' +
+            '<div ><label>原因节点：</label><select ng-model="item.reason" ><option ng-repeat="opt in p_opts" value="{{opt.title}}" sel11>{{opt.title}}</option></select>' +
+            '<div ><label class="padding_right_43">方案节点：</label><select ng-repeat="act in item.actions" ng-model="act.name" ><option ng-repeat="opt in a_opts" value="{{opt.title}}" sel12>{{opt.title}}</option></select><a class = "left_padding" ng-click="add_action($index)" ng-show="button">添加方案</a></div>' +
+            '</div>' +
+            '<div><a ng-click="add_reason_actions()" ng-show="button">添加原因</a> <a ng-click="sure()" ng-show="button"> 确定</a></div>' +
+            '</div>' +
+            '</div>',
+        require : '^?trees',
+        link : function(scope,ele,attrs,treesController){
+            scope.showMe = false;
+            scope.button = true;
+            treesController.add(scope);
+            scope.sure = function(){
+                scope.showMe = !scope.showMe;
+                scope.button = false;
+                scope.action.branchs.push( {
+                    "reason_actions" : [
+                        {
+                            "reason" : "",
+                            "actions" :  [{"name":""}]
+                        }
+                    ],
+                    "result" : ""
+                });
+            };
+            scope.toggle = function(){
+                scope.showMe = !scope.showMe;
+                treesController.getOpened(scope);
+            };
+            scope.add_reason_actions = function(){
+                scope.item["reason_actions"].push({
+                    "reason" : "",
+                    "actions" :  [{"name":""}]
+                });
+            };
+            scope.add_action = function(index){
+                scope.item["reason_actions"][index]["actions"].push({"name":""});
+            };
+        }
+    }
+});
 direcive.directive('sel',function(){
     return{
         restrict:'A',
@@ -178,12 +251,40 @@ direcive.directive('sel',function(){
         }
     }
 });
+direcive.directive('sel111',function(){
+    return{
+        restrict:'A',
+        link:function(scope,ele,attrs){
+            var eles = ele[0];
+            var a1 = scope.pro.name,
+
+                a2 = scope.opt.title;
+            console.log(a1+"111111111");
+            if(a1 == a2){
+                eles.setAttribute('selected','selected');
+            }
+        }
+    }
+});
 direcive.directive('sel1',function(){
     return{
         restrict:'A',
         link:function(scope,ele,attrs){
             var eles = ele[0];
             var a1 = scope.reason.reason,
+                a2 = scope.opt.title;
+            if(a1 == a2){
+                eles.setAttribute('selected','selected');
+            }
+        }
+    }
+});
+direcive.directive('sel11',function(){
+    return{
+        restrict:'A',
+        link:function(scope,ele,attrs){
+            var eles = ele[0];
+            var a1 = scope.item.reason,
                 a2 = scope.opt.title;
             if(a1 == a2){
                 eles.setAttribute('selected','selected');
@@ -205,6 +306,158 @@ direcive.directive('sel2',function(){
     }
 });
 
+direcive.directive('sel12',function(){
+    return{
+        restrict:'A',
+        link:function(scope,ele,attrs){
+            var eles = ele[0];
+            var a1 = scope.act.name,
+                a2 = scope.opt.title;
+            if(a1 == a2){
+                eles.setAttribute('selected','selected');
+            }
+        }
+    }
+});
 
 
+var Tree = function(data){
+    this.data = data;
+    this.stack = [];
+ //   this.outer = document.querySelector('svg');
+    this.svg();
+    this.init();
+    this.createDom();
+};
+Tree.prototype.svg = function(){
+    this.outer = document.createElementNS('http://www.w3.org/2000/svg',"svg");
+    this.outer.setAttribute("width","760");
+    this.outer.setAttribute("height","400");
+};
+Tree.prototype.init = function(){
+    var outer = this.outer,
+        width = outer.getAttribute('width'),
+        height = outer.getAttribute('height');
+
+
+    this.width = width;
+    this.height = height;
+    this.row = height / 10;
+    this.col = width / 18;
+};
+
+Tree.prototype.createDom = function(){
+    //第一列
+    var data = this.data;
+    var problems = data["problems"],
+        len = problems.length,
+        pad = this.height / (len + 1);
+
+
+    for(var i = 0; i < len;i++){
+        var x = parseInt(2 * this.col),
+            y = parseInt((i+1) * pad),
+            key = problems[i];
+        this.stack.push(x+":"+y);
+        this.darwCricle(x,y);
+        this.addText(x,y-30,key.name);
+    }
+
+    //第二列
+    this.drawStar(this.col*6,this.height/2,30);
+
+    //画线
+    while(this.stack.length){
+        var temp = this.stack.pop();
+        var ans = temp.split(':');
+        console.log(temp);
+        this.drawline(ans[0],ans[1],this.col*6,this.height/2);
+    }
+
+    //第三列
+    var brancs =data['branchs'],
+        leng = brancs.length,
+        pading = this.height/(leng+1),
+        act = 0,
+        item = 0;
+
+    for(var k = 0; k < leng ; k++){
+        var temp = brancs[k],
+            act = act + temp["actions"].length;
+    }
+    var a_padding = this.height/(act+1);
+
+    for(var i = 0; i < leng;i++){
+        var x = 11 * this.col,
+            y = (i+1) * pading,
+            key = brancs[i];
+        this.darwCricle(x,y);
+        this.addText(x,y-30,key["reason"]);
+        this.drawline(this.col*6+30,this.height/2,x,y);
+
+
+        var temp = brancs[i]["actions"],
+            l = temp.length;
+        for(var m = 0; m < l;m++){
+            item++;
+            var xx = 15 * this.col,
+                yy = item * a_padding,
+                t_key = temp[i];
+            console.log(item);
+            this.darwCricle(xx,yy);
+            this.addText(xx,yy-30,t_key["name"]);
+            this.drawline(x,y,xx,yy);
+        }
+    }
+    this.addText(200,120,'出现频数：'+this.data["count"]);
+    this.addText(200,150,'效    果：'+this.data["result"]);
+};
+
+Tree.prototype.drawline = function(x1,y1,x2,y2){
+    var cri = document.createElementNS('http://www.w3.org/2000/svg',"line");
+    cri.setAttribute("x1",x1);
+    cri.setAttribute("y1",y1);
+    cri.setAttribute("x2",x2);
+    cri.setAttribute("y2",y2);
+    cri.setAttribute("fill","none");
+    cri.setAttribute("stroke"," #ccc");
+    cri.setAttribute("stroke-width","3");
+    this.outer.appendChild(cri);
+}
+Tree.prototype.drawStar = function(x,y,left){
+    var cri = document.createElementNS('http://www.w3.org/2000/svg',"polygon");
+    var box = [];
+    box.push(x);
+    box.push(y-left);
+    box.push(x);
+    box.push(y+left);
+    box.push(x+left);
+    box.push(y);
+    cri.setAttribute("points",box.join(' '));
+    cri.setAttribute("fill","none");
+    cri.setAttribute("stroke","steelblue");
+    cri.setAttribute("stroke-width","3");
+    this.outer.appendChild(cri);
+
+
+
+};
+Tree.prototype.addText = function(x,y,content){
+    var cri = document.createElementNS('http://www.w3.org/2000/svg',"text");
+    cri.setAttribute("x",x);
+    cri.setAttribute("y",y);
+    cri.appendChild(document.createTextNode(content));
+    this.outer.appendChild(cri);
+};
+
+Tree.prototype.darwCricle = function(x,y){
+    var cri = document.createElementNS('http://www.w3.org/2000/svg',"circle");
+    cri.setAttribute("cx",x);
+    cri.setAttribute("cy",y);
+    cri.setAttribute("r","20");
+    cri.setAttribute("fill","none");
+    cri.setAttribute("stroke","steelblue");
+    cri.setAttribute("stroke-width","3");
+    this.outer.appendChild(cri);
+};
 

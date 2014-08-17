@@ -1,5 +1,4 @@
 
-
         <section>
             <h1>{{title}}</h1>
         </section>
@@ -9,55 +8,19 @@
                 <input type="text"  ng-model = "action._id"  hidden="hidden"/>
                 <div class="factcontent">
                     <div>
-                        <label for="id">编号: </label>
-                        <input type="text" name = "id" id = "id" ng-model = "action.id" />
+                        <label for="result">编号: </label>
+                        <input type="text" name = "result" id = "result" ng-model = "action.result" />
                     </div>
-                    <div>
+                    <div ng-repeat="pro in action.problems">
                         <label for="node_name">问题节点: </label>
-                        <select ng-model="action.node_name"  name = "node_name">
-                            <option ng-repeat="opt in p_opts" value="{{opt.title}}" sel>{{opt.title}}</option>
+                        <select ng-model="pro.name">
+                            <option ng-repeat="opt in p_opts" value="{{opt.title}}" sel111>{{opt.title}}</option>
                         </select>
-                    </div>
-                    <div>
-                        <label for="department">部门:</label>
-                        <input type="text" name = "department"  id = "departmente" ng-model = "action.department"/>
-                    </div>
-                    <div>
-                        <label for="car">车型: </label>
-                        <input type="text" name = "car" id = "car" ng-model = "action.car" />
-                    </div>
-                    <div>
-                        <label for="production_variety">生产:</label>
-                        <input type="text" name = "production_variety"  id = "production_variety" ng-model = "action.production_variety"/>
-                    </div>
-                    <div>
-                        <label for="process">工艺: </label>
-                        <input type="text" name = "process" id = "process" ng-model = "action.process" />
-                    </div>
-                    <div>
-                        <label for="production_line">生产线:</label>
-                        <input type="text" name = "production_line"  id = "production_line" ng-model = "action.production_line"/>
-                    </div>
-                    <div>
-                        <label for="group">部门: </label>
-                        <input type="text" name = "group" id = "group" ng-model = "action.group" />
-                    </div>
-                    <div>
-                        <label for="d_time">持续时间:</label>
-                        <input type="text" name = "d_time"  id = "d_time" ng-model = "action.d_time"/>
-                    </div>
-                    <div>
-                        <label for="content">问题描述:</label>
-                        <input type="text" name = "content"  id = "content" ng-model = "action.content"/>
-                    </div>
-                    <div>
-                        <label for="person">申报人员:</label>
-                        <input type="text" name = "person"  id = "person" ng-model = "action.person"/>
                     </div>
                 </div>
                 <div class="children">
                     <trees>
-                        <tree ng-repeat="item in action.branchs"></tree>
+                        <tree1 ng-repeat="item in action.branchs"></tree1>
                     </trees>
                 </div>
                 <div class="tree_footer">
@@ -65,3 +28,16 @@
                 </div>
             </form>
         </section>
+
+        var fact = {
+        "" : "123",
+        "" : "1001",
+        "problems":[{"name":"jack"},{"name":"robin"}],
+        "branchs":[    {
+        "reason" : "reason1" ,
+        "actions" : [{"name":"action1"},{"name":"action2"}]
+        },  {
+        "reason" : "reason2" ,
+        "actions" : [{"name":"action3"},{"name":"action4"}]
+        }]
+        };
