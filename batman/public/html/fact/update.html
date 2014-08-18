@@ -12,9 +12,9 @@
                         <label for="id">编号: </label>
                         <input type="text" name = "id" id = "id" ng-model = "action.id" />
                     </div>
-                    <div>
+                    <div ng-repeat="item_node in action.node_name ">
                         <label for="node_name">问题节点: </label>
-                        <select ng-model="action.node_name"  name = "node_name">
+                        <select ng-model="item_node.name"  name = "node_name">
                             <option ng-repeat="opt in p_opts" value="{{opt.title}}" sel>{{opt.title}}</option>
                         </select>
                     </div>
@@ -61,6 +61,7 @@
                     </trees>
                 </div>
                 <div class="tree_footer">
+                    <a  ng-click = "add_pro()">添加问题节点</a>
                     <a  ng-click = "submit()">提交</a>
                 </div>
             </form>

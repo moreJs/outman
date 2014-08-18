@@ -19,6 +19,12 @@ function go(req,res){
             }
             temp[k] = model[k];
         }
+       var tip = temp["node_name"],
+           ans = [];
+       for(var i = 0;i<tip.length;i++){
+           ans.push(tip[i]['name']);
+       }
+       temp["node_name"] = ans.join(";");
        fs.writeFile(__dirname + '/'+id+'.json',JSON.stringify(temp),function(err){
            if(err){
                console.log('00000000000');

@@ -243,8 +243,9 @@ direcive.directive('sel',function(){
         restrict:'A',
         link:function(scope,ele,attrs){
             var eles = ele[0];
-            var a1 = scope.action.node_name,
+            var a1 = scope.item_node.name,
                 a2 = scope.opt.title;
+            console.log("000:"+a1);
             if(a1 == a2){
                 eles.setAttribute('selected','selected');
             }
@@ -371,7 +372,7 @@ Tree.prototype.createDom = function(){
         var temp = this.stack.pop();
         var ans = temp.split(':');
         console.log(temp);
-        this.drawline(ans[0],ans[1],this.col*6,this.height/2);
+        this.drawline(parseInt(ans[0])+17,ans[1],this.col*6,this.height/2);
     }
 
     //第三列
@@ -393,7 +394,7 @@ Tree.prototype.createDom = function(){
             key = brancs[i];
         this.darwCricle(x,y);
         this.addText(x,y-30,key["reason"]);
-        this.drawline(this.col*6+30,this.height/2,x,y);
+        this.drawline(this.col*6+30,this.height/2,x - 17,y);
 
 
         var temp = brancs[i]["actions"],
@@ -402,11 +403,12 @@ Tree.prototype.createDom = function(){
             item++;
             var xx = 15 * this.col,
                 yy = item * a_padding,
-                t_key = temp[i];
+                t_key = temp[m];
             console.log(item);
             this.darwCricle(xx,yy);
+            console.log("test:::"+t_key["name"]);
             this.addText(xx,yy-30,t_key["name"]);
-            this.drawline(x,y,xx,yy);
+            this.drawline(x + 17,y,xx - 17,yy);
         }
     }
     this.addText(200,120,'出现频数：'+this.data["count"]);

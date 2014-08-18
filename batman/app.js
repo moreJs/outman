@@ -36,18 +36,39 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/test', function(req,res){
  var fact = {
-        "result" : "问题解决了",
-        "count" : "21",
-        "problems":[{"name":"制件缺陷"},{"name":"拉毛"}],
-        "branchs":[    {
+     "id" : "123",
+     "f_time":"123",
+     "department":"123",
+     "car" : "123",
+     "production_variety" : "123",
+     "process" : "123",
+     "production_line" : "123",
+     "group" : "123",
+     "d_time" : "123",
+     "content": "123",
+     "node_name" : [{"name":"拉毛"},{"name":"缺孔"}],
+     "person" : "123",
+     "branchs":[ {"reason_actions": [{
         "reason" : "孔变形" ,
         "actions" : [{"name":"部件维修"},{"name":"清理废料"}]
-    },  {
+    },{
         "reason" : "缩径" ,
         "actions" : [{"name":"打磨"},{"name":"调整压力"}]
-    }]
+    }],
+        "result" : "no"
+    },{"reason_actions": [{
+        "reason" : "孔变形" ,
+        "actions" : [{"name":"部件维修"},{"name":"清理废料"}]
+    },{
+        "reason" : "缩径" ,
+        "actions" : [{"name":"打磨"},{"name":"调整压力"}]
+    }],
+        "result" : "no"
+    }
+  ]
 };
-    var _fact = require('./dao/net');
+
+    var _fact = require('./dao/fact');
     _fact.add(fact,function(err){
         if(err){
             res.send(err);
@@ -70,6 +91,8 @@ app.get('/test', function(req,res){
 },
 
 }*/
+
+
 //添加各自的路由
 rest_action(app);
 rest_problem(app);

@@ -37,7 +37,7 @@
             <td>{{action.production_line}}</td>
             <td>{{action.group}}</td>
             <td>{{action.content}}</td>
-            <td>{{action.node_name}}</td>
+            <td><div ng-repeat="tip in action.node_name">{{tip.name}} </div></td>
             <td>{{action.person}}</td>
             <td><a ng-href="/#/fact/update/{{action._id}}">编辑</a><a ng-click="remove($index)">删除</a><show item="action"></show></td>
         </tr>

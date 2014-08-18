@@ -130,6 +130,9 @@ app.controller('update_F',['$scope','Fact','p_opts','a_opts','fact','$location',
         a.$save();
         $location.path('/fact');
     };
+    $scope.add_pro = function(){
+        $scope.action.node_name.push({"name":""});
+    }
 }]);
 app.controller('update_N',['$scope','Net','p_opts','a_opts','fact','$location',function($scope,Net,p_opts,a_opts,fact,$location){
     $scope.action = fact;
@@ -138,6 +141,7 @@ app.controller('update_N',['$scope','Net','p_opts','a_opts','fact','$location',f
     $scope.title = "修改问题处理知识";
     $scope.submit = function(){
         var a = new Net(fact);
+        console.log(fact);
         a.$save();
         $location.path('/net');
     };
@@ -342,6 +346,10 @@ app.controller('new_F',['$scope','Fact','p_opts','a_opts','$location',function($
         Fact.save({},$scope.action);
         $location.path('/fact');
     };
+    $scope.add_pro = function(){
+        $scope.action.node_name.push({"name":""});
+    };
+    $scope.action.node_name = [{"name":""}];
     $scope.action.branchs = [
         {
             "reason_actions" : [

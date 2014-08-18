@@ -18,6 +18,9 @@ var Action = new schema({
       reason : String,
       actions : [Action]
 }),
+    Problem = new schema({
+        name : String
+    }),
     Branchs = new schema({
       reason_actions : [Reason_Actions],
       result : String
@@ -33,9 +36,9 @@ var Action = new schema({
         group : String,
         d_time : Date,
         content: String,
-        node_name : String,
+        node_name : [Problem],
         person : String,
-     branchs : [Branchs]
+        branchs : [Branchs]
 });
 
 var Fact = db.model('Fact ',Fact ,'Fact');
