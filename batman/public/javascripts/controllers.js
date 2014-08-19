@@ -56,6 +56,9 @@ app.config(['$routeProvider',function($routeProvider){
                 },
                 a_opts:function(MultiActionLoader){
                     return MultiActionLoader();
+                },
+                nets:function(MultiNetLoader){
+                    return MultiNetLoader();
                 }
             },
             templateUrl:'/html/fact/new.html'
@@ -337,14 +340,15 @@ app.controller('new_P',['$scope','Problem','$location',function($scope,Problem,$
         $location.path('/problem');
     }
 }]);
-app.controller('new_F',['$scope','Fact','p_opts','a_opts','$location',function($scope,Fact,p_opts,a_opts,$location){
+app.controller('new_F',['$scope','Fact','Net','p_opts','a_opts','nets','$location',function($scope,Fact,Net,p_opts,a_opts,nets,$location){
     $scope.action = {};
     $scope.title = "添加问题处理事实树";
     $scope.p_opts = p_opts;
-    $scope.a_opts = a_opts
+    $scope.a_opts = a_opts;
     $scope.save = function(){
         Fact.save({},$scope.action);
         $location.path('/fact');
+        execute($scope.action,nets,Net);
     };
     $scope.add_pro = function(){
         $scope.action.node_name.push({"name":""});
@@ -361,3 +365,104 @@ app.controller('new_F',['$scope','Fact','p_opts','a_opts','$location',function($
             "result" : ""
         }];
 }]);
+
+var execute = function(action,_nets,Net){
+
+    var nets = action["branchs"],
+        num = nets.length;
+
+    if(num == 0){
+        return;
+    }
+
+   outer: for(var i = 0;i < num;i++){
+       var temp = {},
+           net = nets[i];
+       temp["problems"] = action["node_name"];
+       temp["branchs"] = net["reason_actions"];
+       temp["result"] = net["result"];
+
+
+
+       for(var j = 0;j < _nets.length;j++){
+           var item = _nets[j];
+           //以前有相同的。
+           if(compare(temp,item)){
+                var count = parseInt(item["count"]);
+                count++;
+                item["count"] = count;
+                item.$save();
+                continue outer;
+           }
+       }
+
+       //全新的一条
+       temp["count"] = 1;
+       Net.save({},temp);
+
+    }
+};
+
+var compare = function(temp,item){
+    /*    temp["problems"] = action["node_name"];
+     temp["branchs"] = net["reason_actions"];
+     temp["result"] = net["result"];*/
+    //效果
+    var t_re = temp["result"],
+        i_re = item["result"];
+
+    if(t_re != i_re){
+        return false;
+    }
+
+
+    //问题节点
+    var t_pro = temp["problems"],
+        i_pro = item["problems"],
+        t_length = t_pro.length,
+        i_length = i_pro.length;
+
+
+    if(t_length != i_length){
+        return false;
+    }
+
+    while(t_length > 0){
+        t_length--;
+        if(t_pro[t_length]['name'] != i_pro[t_length]['name']){
+            return false;
+        }
+    }
+
+    //原因和方案
+    var t_brance = temp["branchs"],
+        i_brance = item["branchs"],
+        t_leng = t_brance.length,
+        i_leng = i_brance.length;
+
+    if(t_leng != i_leng){
+        return false;
+    }
+
+    while(t_leng > 0){
+        t_leng--;
+        var t_reason = t_brance[t_leng]["reason"],
+            t_actions = t_brance[t_leng]["actions"],
+            t_a_leng = t_actions.length,
+            i_reason = i_brance[t_leng]["reason"],
+            i_actions = i_brance[t_leng]["actions"],
+            i_a_leng = i_actions.length;
+        if(t_reason != i_reason || t_a_leng != i_a_leng){
+            return false;
+        }
+
+        while(t_a_leng > 0){
+            t_a_leng--;
+            if(t_actions[t_a_leng]["name"] != i_actions[t_a_leng]["name"]){
+                return false;
+            }
+        }
+
+    }
+    return true;
+};
