@@ -61,3 +61,24 @@ ul a{
 input[type="text"]:active{
     box-shadow: 1px 1px 2px #eee;
 }
+
+#pro #pro_a{
+    float: left;
+    margin-left: 0px;
+    font-size: 1em;
+    display: inline;
+    line-height: 1.2;
+}
+#pro #pro_b{
+    float: right;
+    margin-left: 0px;
+    font-size: 1em;
+    display: inline;
+    line-height: 1.2;
+}
+section a{
+    padding: 3px 30px;
+    padding-right: 15px;
+    background: #00b7ee url(/images/2.png) no-repeat left center;
+    color: #fff;
+}

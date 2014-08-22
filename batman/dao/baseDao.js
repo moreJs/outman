@@ -30,8 +30,8 @@
 		 BaseDao.prototype.getByQuery = function (query ,callback){
              this.model.find(query ,function(err , models){
 		 	    	      if(!err){
-                           for(var i in query){
-                               console.log(i + "" + query[i]);
+                           for(var i in models){
+                               console.log(i + "" + models[i]);
                            }
 		 	    	      	  console.log('query ok!...' + models);
 		 	    	      	  callback(null,models);
@@ -41,7 +41,44 @@
                           }
 		 	    	});
 		 	};
-		 
+
+    BaseDao.prototype.getByQuery_t = function (query ,qs ,callback){
+        this.model.find(query ,function(err , models){
+            if(!err){
+                var len = models.length,
+                    i = 0,
+                    result = [],
+                    total_len = qs.length;
+               outer: while(i < len){
+                    var temp = models[i++],
+                        pros = temp["problems"],
+                        p_len = pros.length,
+                        j = 0;
+
+                    if(p_len < total_len){
+                        continue outer;
+                    }
+
+                    while(j < p_len){
+                        var item = pros[j++];
+                        if(qs.indexOf(item['name']) == -1){
+                            continue outer;
+                        }
+                    }
+                    result.push(temp);
+                }
+                console.log('query ok!...' +result);
+                callback(null,result);
+            }else {
+                console.log('query wrong!');
+                callback(err,models);
+            }
+        });
+    };
+
+
+
+
 		   BaseDao.prototype.getAll = function (callback){
                console.log('getall ok!'+this.name);
 		   	   this.model.find({},function(err , models){

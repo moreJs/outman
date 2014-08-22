@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8"/>
+</head>
+<body>
+   <form>
+       <label for="t1">年</label>
+       <select name="t1" id="t1">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+       </select>
+       <label for="t2">月</label>
+       <select name="t2" id="t2">
+       </select>
+   </form>
+</body>
+
+<script>
+    var obj = {
+        "1":[1,2,3],
+        "2":[4,5,6]
+    };
+    var s1 = document.querySelector('#t1'),
+        s2 = document.querySelector("#t2");
+
+
+    s1.addEventListener('change',function(){
+        var value = this.value,
+            list = obj[value],
+            ans = [];
+
+
+        for(var i = 0; i < list.length;i++){
+            var temp = "<option>"+list[i]+"</option>";
+            ans.push(temp);
+        }
+        console.log(ans);
+        s2.innerHTML = ans.join();
+    },false);
+</script>
+</html>

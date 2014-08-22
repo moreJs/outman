@@ -238,6 +238,62 @@ direcive.directive('tree1',function(){
         }
     }
 });
+
+direcive.directive('tree2',function(){
+    return{
+        restrict : 'EA',
+        replace : true,
+        template : '<div class="Ng_tree">' +
+            '<div class="tree_title" ng-click="toggle()">NO:{{$index + 1}}</div>' +
+            '<div class="tree_content" id = "shownet" ng-show="showMe">' +
+            '</div>' +
+            '</div>',
+        require : '^?trees',
+        link : function(scope,ele,attrs,treesController){
+            scope.showMe = false;
+            scope.button = true;
+            treesController.add(scope);
+            var warp = ele[0].lastChild;
+
+            var a = new Tree(scope.item);
+         //   var warp = document.getElementById("shownet");
+            warp.appendChild(a.outer);
+
+            scope.sure = function(){
+                scope.showMe = !scope.showMe;
+                scope.button = false;
+                scope.action.branchs.push( {
+                    "reason_actions" : [
+                        {
+                            "reason" : "",
+                            "actions" :  [{"name":""}]
+                        }
+                    ],
+                    "result" : ""
+                });
+            };
+            scope.toggle = function(){
+                scope.showMe = !scope.showMe;
+                if(scope.showMe){
+                    showNet();
+                }
+                treesController.getOpened(scope);
+            };
+            scope.add_reason_actions = function(){
+                scope.item["reason_actions"].push({
+                    "reason" : "",
+                    "actions" :  [{"name":""}]
+                });
+            };
+            scope.add_action = function(index){
+                scope.item["reason_actions"][index]["actions"].push({"name":""});
+            };
+        }
+    }
+});
+
+
+
 direcive.directive('sel',function(){
     return{
         restrict:'A',
@@ -462,4 +518,3 @@ Tree.prototype.darwCricle = function(x,y){
     cri.setAttribute("stroke-width","3");
     this.outer.appendChild(cri);
 };
-

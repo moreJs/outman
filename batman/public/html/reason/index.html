@@ -1,0 +1,31 @@
+<section>
+    <h1>{{title}}</h1>
+</section>
+
+<section>
+    <form class="new">
+        <div ng-repeat="item in items">
+            <label>问题节点:</label>
+            <select ng-model="item.name">
+                <option ng-repeat="opt in p_opts" value="{{opt.title}}">{{opt.title}}</option>
+            </select>
+        </div>
+        <div class="middle_a" id="pro">
+            <a  id = "pro_a" ng-click = "add()">添加问题</a>
+            <a id = "pro_b" ng-click = "submit()">提交</a>
+        </div>
+    </form>
+</section>
+
+<section ng-show="results_show">
+     <h1>推荐排行榜</h1>
+    <div class="children">
+        <trees>
+            <tree2 ng-repeat="item in results"></tree2>
+        </trees>
+    </div>
+    <div>
+        <a ng-click = "ok()">满意</a>
+        <a ng-click = "nok()">不满意</a>
+    </div>
+</section>

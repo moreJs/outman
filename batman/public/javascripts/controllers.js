@@ -98,8 +98,17 @@ app.config(['$routeProvider',function($routeProvider){
             }
         },
         templateUrl:'/html/net/update.html'
-    });
+    }).when('/reason',{
+            controller:'Reason',
+            resolve:{
+                p_opts:function(MultiProblemLoader){
+                    return MultiProblemLoader();
+                }
+            },
+            templateUrl:'/html/reason/index.html'
+        });
 }]);
+
 
 /*app.controller('list_A',['$scope','actions',function($scope,actions){
  $scope.actions = actions;
@@ -466,3 +475,39 @@ var compare = function(temp,item){
     }
     return true;
 };
+
+
+app.controller('Reason',['$scope','p_opts','$http',function($scope,p_opts,$http){
+    $scope.title = "原因推理";
+
+    $scope.p_opts = p_opts;
+
+    $scope.items = [{"name":""}];
+
+    $scope.results_show = false;
+
+    var pros = [];
+
+    $scope.add = function(){
+        $scope.items.push({"name":""});
+    };
+
+    $scope.submit = function(){
+        var len = $scope.items.length,
+            j = 0;
+        while(j < len){
+              pros.push(String($scope.items[j++]["name"]));
+        }
+
+        var key = 'problems.name',
+            values = pros;
+        $http.get('/net/search_s/'+values+'/'+key).success(function(data){
+            $scope.results = data;
+            $scope.results_show = true;
+        });
+    };
+
+    $scope.nok = function(){
+        $scope.results_show = false;
+    }
+}]);

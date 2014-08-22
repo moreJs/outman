@@ -30,7 +30,10 @@ svg{
     background: #fff url(/images/close.png) no-repeat right top;
     z-index: 2;
 }
-
+#shownet svg{
+    position: static;
+    background: #fff;
+}
 svg button{
     width: 38px;
     height: 38px;
