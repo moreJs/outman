@@ -91,7 +91,6 @@ div#main article section:nth-of-type(4) table tr:hover{
     background-color:#fff ;
 }
 div#main article section:nth-of-type(5){
-    background-color: #fff;
     padding-right: 10px;
 }
 div#main article section:nth-of-type(5) ul{
@@ -110,4 +109,38 @@ div#main article section:nth-of-type(5) ul li a{
 div#main article section:nth-of-type(5) span{
     font-size: 1rem;
     color: #999;
+}
+
+section.research_2 span{
+    padding: 5px 25px;
+    font-size: 1.5em;
+    line-height: 1.5;
+
+}
+
+#tip1 {
+    text-decoration: none;
+    color: #fff;
+    font-size: 0.8rem;
+    padding: 3px 30px;
+    padding-right: 15px;
+    background: #00b7ee url(/images/2.png) no-repeat left center;
+}
+#tip2 {
+    text-decoration: none;
+    color: #fff;
+    font-size: 0.8rem;
+    padding: 3px 30px;
+    padding-right: 15px;
+    background: #00b7ee url(/images/2.png) no-repeat left center;
+}
+section.research1 div{
+    width: 60%;
+    margin: 0px auto;
+}
+section.research1 div a{
+   margin-left: 100px;
+}
+section.research1 div a:last-of-type{
+    margin-left: 20px;
 }

@@ -2,12 +2,12 @@
     <h1>{{title}}</h1>
 </section>
 
-<section>
+<section ng-show="results_first">
     <form class="new">
         <div ng-repeat="item in items">
             <label>问题节点:</label>
             <select ng-model="item.name">
-                <option ng-repeat="opt in p_opts" value="{{opt.title}}">{{opt.title}}</option>
+                <option ng-repeat="opt in p_opts" value="{{opt.title}}" selmore>{{opt.title}}</option>
             </select>
         </div>
         <div class="middle_a" id="pro">
@@ -17,15 +17,54 @@
     </form>
 </section>
 
-<section ng-show="results_show">
+<section ng-show="results_show" class="research">
      <h1>推荐排行榜</h1>
     <div class="children">
-        <trees>
+        <trees ng-model="results">
             <tree2 ng-repeat="item in results"></tree2>
         </trees>
     </div>
     <div>
-        <a ng-click = "ok()">满意</a>
         <a ng-click = "nok()">不满意</a>
     </div>
+</section>
+
+<section ng-show="more_results_show" class="research1">
+    <div>
+    <h1>您确定问题都发生了吗？我们建议您再仔细斟酌下是否问题都发生了？</h1>
+    <div>
+        <a ng-click = "m_ok()" id = "pro_aa" >确定</a>
+        <a ng-click = "m_nok()" id = "pro_bb">不确定</a>
+    </div>
+    </div>
+</section>
+
+
+<section ng-show="less_results_show" class="research_2">
+    <h1>根据我们的推测，您很有可能漏掉了一些已近发生的问题，请仔细考虑，选中已近发生的问题节点</h1>
+    <div>
+        <span ng-repeat="tip in exter_pros"><input type="checkbox" name="checkbox" value="{{tip.name}}"  ng-model="tip.flag"/>{{tip.name}}</span>
+    </div>
+    <div>
+        <a ng-click = "mm_ok()" id="tip1">确定</a>
+        <a ng-click = "fnok()" id="tip2">不确定</a>
+    </div>
+</section>
+
+<section ng-show="final_results_show" class="research">
+    <h1>推荐排行榜</h1>
+    <div class="children">
+        <trees>
+            <tree2 ng-repeat="item in results1"></tree2>
+        </trees>
+    </div>
+    <div>
+        <a ng-click = "fnok()">不满意</a>
+    </div>
+</section>
+
+<section ng-show="final_results" class="research">
+    <h1>抱歉</h1>
+    <p>由于我还不够强壮，现在还不能帮助你，给我点时间!</p>
+    <p>当你解决问题时，请记得告诉我！</p>
 </section>

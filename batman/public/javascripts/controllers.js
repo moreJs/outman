@@ -477,14 +477,24 @@ var compare = function(temp,item){
 };
 
 
-app.controller('Reason',['$scope','p_opts','$http',function($scope,p_opts,$http){
+app.controller('Reason',['$scope','p_opts','$http','$location',function($scope,p_opts,$http,$location){
     $scope.title = "原因推理";
 
     $scope.p_opts = p_opts;
 
     $scope.items = [{"name":""}];
 
+    $scope.results_first = true;
     $scope.results_show = false;
+    //用户多输入了问题节点
+    $scope.more_results_show = false;
+    //用户少输入了问题节点
+    $scope.less_results_show = false;
+
+    $scope.final_results_show = false;
+
+    $scope.final_results = false;
+
 
     var pros = [];
 
@@ -492,22 +502,89 @@ app.controller('Reason',['$scope','p_opts','$http',function($scope,p_opts,$http)
         $scope.items.push({"name":""});
     };
 
-    $scope.submit = function(){
+    $scope.submit = function(flage){
         var len = $scope.items.length,
             j = 0;
+        pros = [];
+
         while(j < len){
               pros.push(String($scope.items[j++]["name"]));
         }
 
         var key = 'problems.name',
             values = pros;
+
         $http.get('/net/search_s/'+values+'/'+key).success(function(data){
-            $scope.results = data;
-            $scope.results_show = true;
+
+            if(flage){
+                $scope.results1 = data;
+                $scope.final_results_show = true;
+            }else{
+                $scope.results_show = true;
+                $scope.results = data;
+            }
+
         });
     };
 
     $scope.nok = function(){
         $scope.results_show = false;
-    }
+        var len = $scope.items.length;
+        if(len > 1){
+            $scope.more_results_show = true;
+        }else{
+            $scope.m_ok();
+        }
+    };
+
+
+
+    $scope.ok = function(){
+        $location.path('/');
+    };
+
+    $scope.m_ok = function(){
+        var key = 'problems.name',
+            values = pros;
+        $scope.more_results_show = false;
+        $http.get('/net/search_ss/'+values+'/'+key).success(function(data){
+            console.log('123:'+data);
+            $scope.exter_pros = [];
+            while(data.length){
+                var my_temp = data.pop(),
+                    my_tip = {"flag":false};
+                    my_tip["name"] = my_temp;
+                $scope.exter_pros.push(my_tip);
+            }
+            $scope.less_results_show = true;
+        });
+    };
+
+    $scope.m_nok = function(){
+        $location.path('/');
+    };
+
+    $scope.mm_ok = function(){
+        var my_temp = $scope.exter_pros,
+            my_len = my_temp.length ;
+        for(var i = 0 ; i < my_len ; i++){
+            var item = my_temp[i];
+            if(item["flag"]){
+                var ii = {};
+                ii["name"] = item["name"];
+                $scope.items.push(ii);
+            }
+        }
+
+
+      $scope.less_results_show = false;
+      $scope.submit(true);
+    };
+
+    $scope.fnok = function(){
+        $scope.results_first = false;
+        $scope.final_results_show = false;
+        $scope.final_results = true;
+    };
+
 }]);

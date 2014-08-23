@@ -76,7 +76,7 @@ input[type="text"]:active{
     display: inline;
     line-height: 1.2;
 }
-section a{
+section.research a{
     padding: 3px 30px;
     padding-right: 15px;
     background: #00b7ee url(/images/2.png) no-repeat left center;

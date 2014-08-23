@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <form action="#">
+   <input type="checkbox" value="man" name="checkbox"/>man
+   <input type="checkbox" value="vaman" name="checkbox"/>vaman
+   <input type="submit">
+    </form>
+</body>
+  <script>
+      var a = document.forms[0];
+      a.onsubmit = function(e){
+          e.preventDefault();
+          console.log('123');
+          var a = document.forms[0]["checkbox"];
+          for(var i = 0 ; i < a.length ; i++){
+              if(a[i].checked){
+                  console.log(a[i].value);
+              }
+          }
+      }
+  </script>
+</html>

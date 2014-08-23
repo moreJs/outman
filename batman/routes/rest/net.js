@@ -87,6 +87,9 @@ module.exports = function(app){
     //严格匹配
     app.get("/net/search_s/:key/:value",searchPage_s);
 
+    //父集匹配
+    app.get("/net/search_ss/:key/:value",searchPage_ss);
+
    // app.get("/flare/net/:id",go);
 
 };
@@ -126,6 +129,28 @@ function searchPage_s(req,res){
     console.log(item);
 
     net_dao.getByQuery_t(query,value,function(err,models){
+        res.send(models);
+    });
+}
+
+function searchPage_ss(req,res){
+    var value = req.params.key.split(","),
+        key = req.params.value,
+        item = value[0],
+        query = {};
+/*    console.log("key:"+key);
+    console.log("value:"+value);*/
+    query[key] = item;
+/*    for(var i in query){
+        console.log(i+":"+query[i]);
+    }
+    console.log('-------------------------');
+    console.log('-------------------------');
+
+    console.log(item);*/
+
+    net_dao.getByQuery_tt(query,value,function(err,models){
+        console.log(models);
         res.send(models);
     });
 }

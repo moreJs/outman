@@ -81,3 +81,18 @@ div.tree_content a.left_padding{
 .Ng_tree{
     margin-right: 20px;
 }
+div.tree_title a#tipss  {
+    float: right;
+    display: inline;
+    height: 30px;
+    line-height: 30px;
+}
+#pro_aa , #pro_bb{
+    display: inline;
+    height: 30px;
+    line-height: 30px;
+    padding: 3px 30px;
+    padding-right: 15px;
+    background: #00b7ee url(/images/2.png) no-repeat left center;
+    color: #fff;
+}

@@ -244,7 +244,7 @@ direcive.directive('tree2',function(){
         restrict : 'EA',
         replace : true,
         template : '<div class="Ng_tree">' +
-            '<div class="tree_title" ng-click="toggle()">NO:{{$index + 1}}</div>' +
+            '<div class="tree_title" ng-click="toggle()">NO:{{$index + 1}} <a ng-click = "ok()" id="tipss">满意</a></div>' +
             '<div class="tree_content" id = "shownet" ng-show="showMe">' +
             '</div>' +
             '</div>',
@@ -274,9 +274,62 @@ direcive.directive('tree2',function(){
             };
             scope.toggle = function(){
                 scope.showMe = !scope.showMe;
-                if(scope.showMe){
+/*                if(scope.showMe){
                     showNet();
-                }
+                }*/
+                treesController.getOpened(scope);
+            };
+            scope.add_reason_actions = function(){
+                scope.item["reason_actions"].push({
+                    "reason" : "",
+                    "actions" :  [{"name":""}]
+                });
+            };
+            scope.add_action = function(index){
+                scope.item["reason_actions"][index]["actions"].push({"name":""});
+            };
+        }
+    }
+});
+
+direcive.directive('tree3',function(){
+    return{
+        restrict : 'EA',
+        replace : true,
+        template : '<div class="Ng_tree">' +
+            '<div class="tree_title" ng-click="toggle()">NO:{{$index + 1}}</div>' +
+            '<div class="tree_content" id = "shownet" ng-show="showMe">' +
+            '</div>' +
+            '</div>',
+        require : '^?trees',
+        link : function(scope,ele,attrs,treesController){
+            scope.showMe = false;
+            scope.button = true;
+            treesController.add(scope);
+            var warp = ele[0].lastChild;
+
+            var a = new Tree(scope.item);
+            //   var warp = document.getElementById("shownet");
+            warp.appendChild(a.outer);
+
+            scope.sure = function(){
+                scope.showMe = !scope.showMe;
+                scope.button = false;
+                scope.action.branchs.push( {
+                    "reason_actions" : [
+                        {
+                            "reason" : "",
+                            "actions" :  [{"name":""}]
+                        }
+                    ],
+                    "result" : ""
+                });
+            };
+            scope.toggle = function(){
+                scope.showMe = !scope.showMe;
+                /*                if(scope.showMe){
+                 showNet();
+                 }*/
                 treesController.getOpened(scope);
             };
             scope.add_reason_actions = function(){
@@ -293,7 +346,6 @@ direcive.directive('tree2',function(){
 });
 
 
-
 direcive.directive('sel',function(){
     return{
         restrict:'A',
@@ -308,13 +360,26 @@ direcive.directive('sel',function(){
         }
     }
 });
+
+direcive.directive('selmore',function(){
+    return{
+        restrict:'A',
+        link:function(scope,ele,attrs){
+            var eles = ele[0];
+            var a1 = scope.item.name,
+                a2 = scope.opt.title;
+            if(a1 == a2){
+                eles.setAttribute('selected','selected');
+            }
+        }
+    }
+});
 direcive.directive('sel111',function(){
     return{
         restrict:'A',
         link:function(scope,ele,attrs){
             var eles = ele[0];
             var a1 = scope.pro.name,
-
                 a2 = scope.opt.title;
             console.log(a1+"111111111");
             if(a1 == a2){
